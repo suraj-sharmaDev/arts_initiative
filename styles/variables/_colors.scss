@@ -1,0 +1,40 @@
+@use './mixins' as *;
+
+$theme: (
+    primaryBgColor: (
+        darkMode: #2c3e50,
+        lightMode: #b2d8b2,
+    ),
+    secondaryBgColor: (
+        lightMode:#ffd9d8,
+        darkMode: #e69958,
+    ),
+    textColor: (
+        darkMode: #ffd9d8,
+        lightMode: #e69958,
+    ),
+    textHoverColor: (
+        darkMode: #ffd9d8,
+        lightMode: #e69958,
+    ),
+    secondaryTextColor: (
+        darkMode: #ffd9d8,
+        lightMode: #e69958,
+    ),
+    titleColor: (
+        darkMode: #fefefe,
+        lightMode: #5a5a5a,
+    ),
+    boxShadowColor: (
+        darkMode: rgb(36, 36, 36),
+        lightMode: rgba(179,179,179,0.75),
+    ),
+);
+
+.darkMode {
+    @include themeHelper("darkMode", $theme)
+}
+
+.lightMode {
+    @include themeHelper("lightMode", $theme)
+}

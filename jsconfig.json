@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/pages/*": ["src/pages/*"],
+      "@/components/*": ["src/client/components/*"],
+      "@/serverConfig/*": ["src/server/serverConfig/*"],
+      "@/helpers/*": ["src/client/helpers/*"],
+      "@/redux/*": ["src/client/redux/*"],
+      "@/public/*": ["./public/*"],
+      "@/model/*": ["src/server/model/*"],
+      "@/controller/*": ["src/server/controller/*"],
+      "@/html_templates/*": ["src/server/html_templates/*"],
+      "@/services/*": ["src/client/services/*"],
+      "@/serverUtils/*": ["src/server/serverUtils/*"],
+    }
+  }
+}

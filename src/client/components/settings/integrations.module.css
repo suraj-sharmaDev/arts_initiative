@@ -1,0 +1,88 @@
+.integrationContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    color: var(--textColor);
+}
+
+.integrationBox {
+    width: 100%;
+    border: 1px solid grey;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.integrationBox h1 {
+    font-size: 22px;
+}
+
+.integrationBox img {
+    width: 100px;
+    height: 100px;
+}
+
+.integrationBox p {
+    color: grey;
+}
+
+.notionContainer {
+    position: relative;
+    width: 100px;
+}
+
+.notionContainer p {
+    color: var(--secondaryTextColor);
+}
+
+.notionDeleteBtn {
+    width: 30px;
+    position: absolute;
+    right: -5px;
+    top: 10px;
+    outline: none;
+    border-radius: 50%;
+    border: none;
+    background-color: red;
+    color: white;
+}
+
+.notionBtn img {
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
+}
+
+.tutorialHelpBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+    color: #d9534f;
+    margin-bottom: 20px;
+}
+
+.tutorialCloseBtn {
+    position: absolute;
+    top: -22px;
+    right: -15px;
+    font-size: 35px;
+    border: none;
+    background-color: transparent;
+    color: #d9534f;
+    z-index: 999;
+}
+
+@media only screen and (min-width: 768px) {
+    .integrationContainer {
+        padding-top: 50px;
+    }
+    .integrationBox {
+        width: 70%;
+    }
+}
