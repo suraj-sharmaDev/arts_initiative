@@ -5,11 +5,8 @@ import { io } from "socket.io-client";
 import { SOCKET_URL } from "src/client/clientConfig/clientConstants";
 
 import NavigationBar from "src/client/components/navigation/navigationBar";
-import { DrawerSideBar } from "src/client/components/navigation/navigationBar";
-import drawerStyles from "@/components/navigation/navigationBar.module.css";
 import Loader from "src/client/components/commons/loader";
 import AlertPopup from "src/client/components/navigation/alertPopup";
-import PushNotificationLayout from "src/client/components/navigation/pushNotificationLayout";
 import { syncUser } from "src/client/redux/authorization/thunk";
 import ProjectSetup from "src/client/components/projectSetup";
 import { PATH_NAMES } from "src/client/clientConfig/clientConstants";
@@ -24,7 +21,6 @@ const NavigationHelper = (props) => {
   const [socket, setSocket] = React.useState(null);
   const auth = useSelector((state) => state.auth);
   const { isLoggedIn, email } = auth;
-  const drawerRef = useRef(null);
   const installBtnRef = useRef(null);
   const dispatch = useDispatch();
   const deferredPrompt = useRef(null);
@@ -100,10 +96,6 @@ const NavigationHelper = (props) => {
     router.push(path);
   };
 
-  const toggleDrawer = () => {
-    drawerRef.current.classList.toggle(drawerStyles.showDrawer);
-  };
-
   const onClickInstallApp = async () => {
     if (deferredPrompt.current !== null) {
       deferredPrompt.current.prompt();
@@ -132,23 +124,9 @@ const NavigationHelper = (props) => {
   return (
     <>
       <ProjectSetup router={router} />
-      <NavigationBar isLoggedIn={isLoggedIn} toggleDrawer={toggleDrawer} />
-      <div className="d-flex">
-        {isLoggedIn && (
-          <>
-            <DrawerSideBar
-              setRef={(ref) => (drawerRef.current = ref)}
-              email={email}
-              setInstallBtnRef={(ref) => (installBtnRef.current = ref)}
-              isAppInstalled={isAppInstalled}
-              onClickInstallApp={onClickInstallApp}
-            />
-            <AlertPopup />
-            {/* <PushNotificationLayout /> */}
-          </>
-        )}
-        <Component {...pageProps} socket={socket} email={email} />
-      </div>
+      <NavigationBar isLoggedIn={isLoggedIn} />
+      <AlertPopup />
+      <Component {...pageProps} socket={socket} email={email} />
     </>
   );
 };
