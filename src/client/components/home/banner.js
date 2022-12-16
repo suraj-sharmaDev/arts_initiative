@@ -1,12 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import styles from "./Banner.module.css";
+import Data from "./dummyData/data.json";
 
-const BANNER_DATA = {
-  highlight: "Discover, buy & sell Rare and Unique Arts",
-  subhighlight:
-    "We have you covered, if you are looking for amazing artworks from best, rising local artists",
-};
+const { BANNER_DATA } = Data;
 
 const HomeBanner = (props) => {
   return (
@@ -26,7 +23,7 @@ const HomeBanner = (props) => {
       </div>
       <div className="col-12 col-md-7">
         <div className={styles.bannerImageContainer}>
-          <img src="/images/banner_img.png"  />
+          <img src="/images/banner_img.png" />
         </div>
       </div>
     </div>

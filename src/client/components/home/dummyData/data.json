@@ -1,0 +1,35 @@
+{
+  "BANNER_DATA": {
+    "highlight": "Discover, buy & sell Rare and Unique Arts",
+    "subhighlight": "We have you covered, if you are looking for amazing artworks from best, rising local artists"
+  },
+  "POPULAR_DATA": [
+    {
+      "artist_name": "John Doe",
+      "profile_img": "/images/John_doe.jpg",
+      "artwork": {
+        "name": "Amazing",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+        "img": "/images/art_1.webp"
+      }
+    },
+    {
+      "artist_name": "Love Lace",
+      "profile_img": "/images/Love_lace.jpg",
+      "artwork": {
+        "name": "Amazing",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+        "img": "/images/art_2.webp"
+      }
+    },
+    {
+      "artist_name": "Craig Mckay",
+      "profile_img": "/images/Craig_Mckay.jpg",
+      "artwork": {
+        "name": "Amazing",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+        "img": "/images/art_3.webp"
+      }
+    }
+  ]
+}
