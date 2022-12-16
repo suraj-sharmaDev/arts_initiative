@@ -1,8 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import styles from "./PreAuth.module.css";
+import { PATH_NAMES } from "src/client/clientConfig/clientConstants";
 
-const PreAuthNavbar = (props) => {
+const routings = [
+  { title: "Features", path: "/" },
+  { title: "Marketplace", path: "/marketplace" },
+  { title: "Community", path: "/community" },
+  { title: "Activity", path: "/activity" },
+];
+
+const PreAuthNavbar = ({ pathname, ...props }) => {
   const linkContainerRef = useRef(null);
   const fakeDivRef = useRef(null);
 
@@ -27,19 +35,19 @@ const PreAuthNavbar = (props) => {
   };
 
   return (
-    <div className={`container p-2`}>
+    <div className={`container py-2`}>
       <nav className={`navbar ${styles.navContainer}`}>
         <span className={styles.brand}>Arted</span>
         <div className={styles.linkContainer} ref={linkContainerRef}>
-          <Link href={"#"}>
-            <span className={styles.navLink}>Features</span>
-          </Link>
-          <Link href={"#"}>
-            <span className={styles.navLink}>Features</span>
-          </Link>
-          <Link href={"#"}>
-            <span className={styles.navLink}>Features</span>
-          </Link>
+          {routings.map((r, idx) => {
+            const isActiveRoute = r.path == pathname;
+            const activeClass = isActiveRoute ? styles.activeNavLink : "";
+            return (
+              <Link href={r.path} key={idx.toString()}>
+                <span className={`${styles.navLink} ${activeClass}`}>{r.title}</span>
+              </Link>
+            );
+          })}
         </div>
         <button className={styles.menuBtn} onClick={onClickMenuBtn}>
           <i className="bi bi-list"></i>

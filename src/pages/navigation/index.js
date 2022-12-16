@@ -72,7 +72,7 @@ const NavigationHelper = (props) => {
     // user not logged in and tries accessing authorized path
     if (!isLoggedIn && !PREAUTH_PATH.includes(pathname)) {
       setTimeout(() => {
-        navigateToPath(PATH_NAMES.preAuthPath.login);
+        navigateToPath(PATH_NAMES.preAuthPath.home);
       }, 700);
       return;
     }
@@ -124,7 +124,7 @@ const NavigationHelper = (props) => {
   return (
     <>
       <ProjectSetup router={router} />
-      <NavigationBar isLoggedIn={isLoggedIn} />
+      <NavigationBar isLoggedIn={isLoggedIn} pathname={pathname} />
       <AlertPopup />
       <Component {...pageProps} socket={socket} email={email} />
     </>
