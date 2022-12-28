@@ -1,20 +1,23 @@
 import { ReactElement } from "react";
 import type { NextPageWithLayout } from "../types";
-import { AuthLayout, AccountLayout } from "@/components/layouts";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { BaseLayout } from "@/components/layouts";
+import { GetServerSidePropsContext } from "next";
 import env from "@/lib/env";
 import { getSession } from "@/lib/session";
+import { Creative, Features, HeroSection } from "@/components/interfaces/Home";
 
 const Home: NextPageWithLayout = (props) => {
   return (
-    <>
-      <main>Some data here</main>
-    </>
+    <div>
+      <HeroSection />
+      <Features />
+      <Creative />
+    </div>
   );
 };
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <AuthLayout>{page}</AuthLayout>;
+  return <BaseLayout>{page}</BaseLayout>;
 };
 
 export const getServerSideProps = async (
@@ -26,12 +29,6 @@ export const getServerSideProps = async (
     return {
       redirect: {
         destination: env.redirectAfterSignIn,
-      },
-    };
-  } else {
-    return {
-      redirect: {
-        destination: env.redirectOnunAuth,
       },
     };
   }
