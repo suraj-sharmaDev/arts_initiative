@@ -16,13 +16,11 @@ const Join = () => {
       name: "",
       email: "",
       password: "",
-      team: "",
     },
     validationSchema: Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().required().email(),
       password: Yup.string().required().min(7),
-      team: Yup.string().required().min(3),
     }),
     onSubmit: async (values) => {
       const response = await fetch("/api/auth/join", {
@@ -53,15 +51,6 @@ const Join = () => {
           placeholder="Your name"
           value={formik.values.name}
           error={formik.touched.name ? formik.errors.name : undefined}
-          onChange={formik.handleChange}
-        />
-        <InputWithLabel
-          type="text"
-          label="Team"
-          name="team"
-          placeholder="Team name"
-          value={formik.values.team}
-          error={formik.touched.team ? formik.errors.team : undefined}
           onChange={formik.handleChange}
         />
         <InputWithLabel

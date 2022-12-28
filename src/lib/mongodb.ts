@@ -9,6 +9,7 @@ const uri = process.env.DATABASE_URL;
 const options = {};
 
 declare global {
+  // eslint-disable-next-line
   var _mongoClientPromise: Promise<MongoClient>;
 }
 

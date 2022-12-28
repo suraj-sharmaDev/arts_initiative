@@ -8,6 +8,7 @@ export interface ThemeContextProps {
 
 export const ThemeContext = createContext<ThemeContextProps>({
   theme: "default",
+  // eslint-disable-next-line
   setTheme: () => {},
 });
 
@@ -35,8 +36,9 @@ export const ThemeContextProvider = ({
   /**
    * Apply theme to 'html' tag on DOM.
    */
+  // eslint-disable-next-line
   const applyTheme = (theme: string = "default") => {
-    let newTheme = theme;
+    const newTheme = theme;
     const html = document.getElementsByTagName("html")[0];
     localStorage.setItem("theme", theme);
     (html as any).setAttribute("data-theme", newTheme);

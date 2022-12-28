@@ -4,7 +4,6 @@ import type { ApiResponse } from "@/types/index";
 import fetcher from "@/lib/fetcher";
 
 const useTeamMembers = (slug: string) => {
-  if (!slug) return null;
   const url = `/api/teams/${slug}`;
 
   const { data, error } = useSWR<ApiResponse<any[]>>(url, fetcher);

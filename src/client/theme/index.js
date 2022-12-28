@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const defaultTheme = require("./defaultTheme");
 const darkTheme = require("./darkTheme");
 

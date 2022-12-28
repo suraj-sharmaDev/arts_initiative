@@ -62,6 +62,7 @@ export default function BaseNavbar() {
               <Link
                 href={n.to}
                 className="mr-4 block text-white lg:mx-10 lg:mt-0 lg:inline-block"
+                key={idx.toString()}
               >
                 {n.title}
               </Link>
