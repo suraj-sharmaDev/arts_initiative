@@ -30,25 +30,3 @@ yarn-error.log*
 
 # vercel
 .vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# uploaded files
-public/uploads/*
-
-# service worker created by next-pwa
-public/sw.*
-public/workbox-*
-public/worker-*
-
-# python caches
-python_src/__pycache__/*
-
-# lock files
-yarn.lock
-package-lock.json
-
-#error log files
-/logs

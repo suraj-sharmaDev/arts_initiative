@@ -1,44 +1,34 @@
-# Audio to text using openai/whisper
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Whisper is a general-purpose speech recognition model. We will be using nodejs to transcribe audio file to text.
+## Getting Started
 
-## Steps to follow
+First, run the development server:
 
-# Installation and setup
+```bash
+npm run dev
+# or
+yarn dev
+```
 
-- git clone this repo
-- change access permission of git folder using `chmod -R 777 _folderName_`
-- cd into _folderName_ and run `npm install`
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# Running app in development environment
-- do `npm start`
-- Open url localhost:3000
-- Record audio and test the feature
+You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-# Running app in production environment
-- install pm2
-- run `npm run build`
-- start next server `pm2 start npm name "protoflow_site" -- start` 
-    important : use same command
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-- setup nginx reverse proxy to server nodejs server on localhost:3000
-- Increase nginx upload size limit by
-    - sudo vim /etc/nginx/nginx.conf
-    - http {
-        ...
-        client_max_body_size 100M;
-    }
-    - save and restart nginx `sudo systemctl restart nginx`
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-- Setup reverse proxy inside sites-available
-    location /{
-        proxy_pass http://127.0.0.1:3000/;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade; 
-    }
+## Learn More
 
-# important git commands for storing git config
-git config --global credential.helper store
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
