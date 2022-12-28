@@ -4,8 +4,8 @@ export default function HeroSection() {
   return (
     <div className="flex w-full flex-wrap py-4">
       <div className="w-full lg:w-2/4">
-        <h1 className="text-2xl font-bold">Why us?</h1>
-        <p>
+        <h1 className="text-3xl font-bold">Why us?</h1>
+        <p className="text-xl tracking-tight">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut
           porta massa. Orci varius natoque penatibus et magnis dis parturient
           montes, nascetur ridiculus mus. Vestibulum auctor eros eget nisi
@@ -20,13 +20,16 @@ export default function HeroSection() {
         </p>
         <Link
           href="/auth/login"
-          className="my-4 flex w-20 items-center rounded border border-primary px-3 py-2 text-primary hover:border-secondary hover:text-secondary"
+          className="my-4 flex w-1/4 items-center justify-center rounded border-2 border-accent px-3 py-2 hover:bg-primary hover:text-gray-500"
         >
-          <span>Join Us</span>
+          <span className="font-bold">Join Us</span>
         </Link>
       </div>
       <div className="flex w-full items-center justify-center lg:w-2/4">
-        <span className="w-full bg-secondary lg:w-2/4 " style={{ height: 200 }}>
+        <span
+          className="w-full bg-white text-gray-400 lg:w-2/4"
+          style={{ height: 200 }}
+        >
           Image here
         </span>
       </div>

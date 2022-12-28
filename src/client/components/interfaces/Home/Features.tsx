@@ -1,22 +1,23 @@
-import { Card } from "@/components/ui";
+import FeaturedItem from "./FeaturedItem";
 
+const data = [
+  {
+    artistName: "John Doe",
+    pictureName: "Morning rise",
+    artistImage: "string",
+    pictureDiscription: "string",
+    artistLink: "string",
+    pictureLink: "string",
+  },
+];
 export default function Features() {
   return (
-    <div className="w-full bg-secondary py-4 px-2" id="features">
+    <div className="w-full rounded bg-primary py-4 px-6" id="features">
       <h1 className="text-2xl font-bold">Features</h1>
       <div className="flex flex-row gap-3">
-        <Card heading="Picture Name">
-          <span>Picture here</span>
-          <span>Price here</span>
-        </Card>
-        <Card heading="Picture Name">
-          <span>Picture here</span>
-          <span>Price here</span>
-        </Card>
-        <Card heading="Picture Name">
-          <span>Picture here</span>
-          <span>Price here</span>
-        </Card>
+        {data.map((d, idx) => (
+          <FeaturedItem item={d} />
+        ))}
       </div>
     </div>
   );

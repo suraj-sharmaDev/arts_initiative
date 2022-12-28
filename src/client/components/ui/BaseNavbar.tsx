@@ -30,7 +30,7 @@ export default function BaseNavbar() {
   };
   return (
     <nav className="flex flex-wrap items-center justify-between bg-primary p-5 lg:px-10">
-      <div className="mr-6 flex flex-shrink-0 items-center text-white">
+      <div className="mr-6 flex flex-shrink-0 items-center">
         <Link href={"/"}>
           <span className="text-xl font-semibold tracking-tight">
             Arts Initiative
@@ -39,7 +39,7 @@ export default function BaseNavbar() {
       </div>
       <div className="block lg:hidden">
         <button
-          className="flex items-center rounded border border-white px-3 py-2 text-white hover:border-secondary hover:text-secondary"
+          className="flex items-center rounded border border-white px-3 py-2 hover:border-secondary hover:text-secondary"
           onClick={toggleNavbar}
         >
           <svg
@@ -61,7 +61,7 @@ export default function BaseNavbar() {
             return (
               <Link
                 href={n.to}
-                className="mr-4 block text-white lg:mx-10 lg:mt-0 lg:inline-block"
+                className="mr-4 mt-4 block lg:mx-10 lg:mt-0 lg:inline-block"
                 key={idx.toString()}
               >
                 {n.title}
@@ -72,7 +72,7 @@ export default function BaseNavbar() {
         <div>
           <a
             href="#"
-            className="mt-4 inline-block rounded border border-white px-4 py-2 text-sm leading-none text-white hover:border-transparent hover:bg-white hover:text-teal-500 lg:mt-0"
+            className="mt-4 inline-block rounded border border-white px-4 py-2 text-sm leading-none hover:border-transparent hover:bg-white hover:text-teal-500 lg:mt-0"
           >
             Download
           </a>
