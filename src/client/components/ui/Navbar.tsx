@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Navbar() {
   const sidebarToggler = () => {
     const sidebar = document.getElementById("sidebar");
@@ -40,12 +42,14 @@ export default function Navbar() {
                 />
               </svg>
             </button>
-            <a
-              href=""
+            <Link
+              href="/account/dashboard"
               className="flex items-center text-xl font-bold lg:ml-2.5"
             >
-              <span className="self-center whitespace-nowrap">BoxyHQ</span>
-            </a>
+              <span className="self-center whitespace-nowrap text-primary">
+                Arts Initiative
+              </span>
+            </Link>
           </div>
         </div>
       </div>

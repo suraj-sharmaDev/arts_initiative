@@ -1,5 +1,5 @@
 import type { NextPageWithLayout } from "src/types";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -25,9 +25,11 @@ const Login: NextPageWithLayout<
   const router = useRouter();
   const { t } = useTranslation("common");
 
-  if (status == "authenticated") {
-    router.push(redirectAfterSignIn);
-  }
+  useEffect(() => {
+    if (status == "authenticated") {
+      router.push(redirectAfterSignIn);
+    }
+  }, [status]);
 
   const formik = useFormik({
     initialValues: {
@@ -47,6 +49,11 @@ const Login: NextPageWithLayout<
         redirect: false,
         callbackUrl: redirectAfterSignIn,
       });
+
+      if (response?.error) {
+        toast.error(response.error);
+        return;
+      }
 
       if (!response?.ok) {
         toast.error(t("login-error"));

@@ -30,3 +30,10 @@ export const extractAuthToken = (req: NextApiRequest): string | null => {
 
   return authHeader ? authHeader.split(" ")[1] : null;
 };
+
+// create url query from json object
+export const jsonToUrlQuery = (obj: object | any) => {
+  return Object.keys(obj).reduce((query: string, key: string) => {
+    return query + key + "=" + obj[key] + "&";
+  }, "?");
+};

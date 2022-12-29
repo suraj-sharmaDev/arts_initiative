@@ -29,10 +29,10 @@ export default function BaseNavbar() {
     }
   };
   return (
-    <nav className="flex flex-wrap items-center justify-between bg-primary p-5 lg:px-10">
+    <nav className="flex flex-wrap items-center justify-between bg-white p-5 lg:px-10">
       <div className="mr-6 flex flex-shrink-0 items-center">
         <Link href={"/"}>
-          <span className="text-xl font-semibold tracking-tight">
+          <span className="text-xl font-bold text-primary">
             Arts Initiative
           </span>
         </Link>

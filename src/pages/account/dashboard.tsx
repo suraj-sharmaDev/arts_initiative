@@ -4,9 +4,13 @@ import { Card } from "@/components/ui";
 import { GetServerSidePropsContext } from "next";
 import { getSession } from "@/lib/session";
 import env from "@/lib/env";
+import useGallery from "src/hooks/useGallery";
 
 const Dashboard: NextPageWithLayout = () => {
   const { data: session } = useSession();
+  const gallery = useGallery();
+
+  console.log(gallery?.gallery);
 
   return (
     <Card heading="Dashboard">

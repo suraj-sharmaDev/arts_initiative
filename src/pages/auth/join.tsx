@@ -56,7 +56,7 @@ Signup.getLayout = function getLayout(page: ReactElement) {
   return (
     <AuthLayout
       heading="Create an account"
-      description="Start your 30-day free trial"
+      description="Join our community of artists!"
     >
       {page}
     </AuthLayout>

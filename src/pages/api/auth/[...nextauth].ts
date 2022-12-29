@@ -33,7 +33,9 @@ export const authOptions: NextAuthOptions = {
         };
 
         const user = await getUser({ email });
-        if (!user) return null;
+        if (!user) {
+          throw new Error("User with given credential does not exist!");
+        }
         if (!user.password) {
           const userAccount = await getAccount({
             userId: new ObjectId(user._id),

@@ -11,7 +11,7 @@ type Props = {
   };
 };
 
-export default function ({ item }: Props) {
+export default function FeaturedItem({ item }: Props) {
   return (
     <div className="border-1 bg-white">
       <UserIcon />

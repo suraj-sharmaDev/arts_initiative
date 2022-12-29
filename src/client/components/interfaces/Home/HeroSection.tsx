@@ -20,9 +20,9 @@ export default function HeroSection() {
         </p>
         <Link
           href="/auth/login"
-          className="my-4 flex w-1/4 items-center justify-center rounded border-2 border-accent px-3 py-2 hover:bg-primary hover:text-gray-500"
+          className="btn-primary btn my-3 px-10 text-white"
         >
-          <span className="font-bold">Join Us</span>
+          <span>Join Us</span>
         </Link>
       </div>
       <div className="flex w-full items-center justify-center lg:w-2/4">

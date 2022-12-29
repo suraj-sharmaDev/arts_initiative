@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Sidebar, Navbar, Error, Loading } from "@/components/ui";
+import { BottomNavigator } from "../ui/Account";
 
 export default function AccountLayout({
   children,
@@ -20,6 +21,7 @@ export default function AccountLayout({
           </main>
         </div>
       </div>
+      <BottomNavigator />
     </>
   );
 }

@@ -2,8 +2,8 @@ import {
   HomeIcon,
   UserIcon,
   ArrowLeftOnRectangleIcon,
-  UsersIcon,
-  KeyIcon,
+  ShoppingBagIcon,
+  MagnifyingGlassIcon,
   ArrowLeftCircleIcon,
 } from "@heroicons/react/24/solid";
 import { signOut } from "next-auth/react";
@@ -28,7 +28,7 @@ export default function Sidebar() {
       >
         <div className="relative flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white pt-0">
           <ArrowLeftCircleIcon
-            className="show absolute -right-3 h-8 w-8 cursor-pointer text-neutral lg:hidden"
+            className="show absolute -right-3 h-8 w-8 cursor-pointer text-primary lg:hidden"
             onClick={sidebarToggler}
           />
           <div className="flex flex-1 flex-col overflow-y-auto pt-7 pb-4 lg:pt-5">
@@ -37,7 +37,7 @@ export default function Sidebar() {
                 <li>
                   <NavItem
                     href="/account/dashboard"
-                    text="Dashboard"
+                    text="Home"
                     icon={HomeIcon}
                     active={router.pathname === "/account/dashboard"}
                     onClick={sidebarToggler}
@@ -45,20 +45,29 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <NavItem
-                    href="/account/teams"
-                    text="Teams"
-                    icon={UsersIcon}
-                    active={router.pathname === "/account/teams"}
+                    href="/account/explore"
+                    text="Explore"
+                    icon={MagnifyingGlassIcon}
+                    active={router.pathname === "/account/explore"}
+                    onClick={sidebarToggler}
+                  />
+                </li>
+                <li>
+                  <NavItem
+                    href="/account/orders"
+                    text="Orders"
+                    icon={ShoppingBagIcon}
+                    active={router.pathname === "/account/orders"}
                     onClick={sidebarToggler}
                   />
                 </li>
               </ul>
               <div className="space-y-2 pt-2">
                 <NavItem
-                  href="/account"
-                  text="Account"
+                  href="/account/profile"
+                  text="Profile"
                   icon={UserIcon}
-                  active={router.pathname === "/account"}
+                  active={router.pathname === "/account/profile"}
                   onClick={sidebarToggler}
                 />
                 <NavItem
