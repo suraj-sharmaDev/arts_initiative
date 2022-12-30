@@ -1,4 +1,5 @@
 import { ApiResponse } from "@/types/base";
+import { XCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useFormik } from "formik";
 import { Modal, Button } from "react-daisyui";
@@ -44,8 +45,11 @@ const CreateGalleryModal: React.FC<Props> = ({
 
   return (
     <Modal open={isVisible} onClickBackdrop={toggleVisible} responsive={true}>
-      <Modal.Header className="text-gray-700">
+      <Modal.Header className="flex items-center text-gray-700">
         <span>Enter Gallery Details</span>
+        <button className="absolute -top-0 -right-0" onClick={toggleVisible}>
+          <XCircleIcon className="h-8 w-8 text-primary" />
+        </button>
       </Modal.Header>
       <Modal.Body className="pb-20 lg:pb-0">
         <form onSubmit={formik.handleSubmit}>

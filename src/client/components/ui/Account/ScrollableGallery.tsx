@@ -2,6 +2,8 @@ import { Card } from "@/components/ui";
 import { useState } from "react";
 import { Stack, Carousel } from "react-daisyui";
 import CreateGalleryModal from "./CreateGalleryModal";
+import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
+import UploadPictureModal from "./UploadPictureModal";
 
 type Props = {
   galleryItems: any;
@@ -11,9 +13,14 @@ type Props = {
 
 const ScrollableGallery = ({ galleryItems, heading, userId }: Props) => {
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   const toggleCreateModal = () => {
     setShowCreateModal(!showCreateModal);
+  };
+
+  const toggleUploadModal = () => {
+    setShowUploadModal(!showUploadModal);
   };
 
   return (
@@ -38,26 +45,49 @@ const ScrollableGallery = ({ galleryItems, heading, userId }: Props) => {
                   className="flex cursor-pointer flex-col items-center p-3"
                 >
                   <span>{gD.galleryName}</span>
-                  <div className="h-[15rem] w-[13rem] bg-primary hover:animate-pulse">
-                    <Stack>
-                      {gD.artworks.map((iD: any, jdx: number) => (
-                        <img
-                          src={iD.src}
-                          key={gD.title + jdx}
-                          className={`h-full w-full`}
-                        />
-                      ))}
-                    </Stack>
+                  <div className="h-[15rem] w-[13rem] rounded bg-primary hover:animate-pulse">
+                    {gD.artworks.length == 0 ? (
+                      <button
+                        onClick={toggleUploadModal}
+                        className="flex h-full w-full flex-col items-center justify-center text-white"
+                      >
+                        <ArrowUpCircleIcon className="mb-4 h-20 w-20" />
+                        <span>Upload pictures in gallery!</span>
+                      </button>
+                    ) : (
+                      <Stack>
+                        {gD.artworks.map((iD: any, jdx: number) => (
+                          <img
+                            src={iD.src}
+                            key={gD.title + jdx}
+                            className={`h-full w-full`}
+                          />
+                        ))}
+                      </Stack>
+                    )}
                   </div>
                 </Carousel.Item>
               ))}
             </Carousel>
           </Card.Body>
+          <Card.Footer>
+            <button
+              className="btn-secondary btn text-white"
+              onClick={toggleCreateModal}
+            >
+              Create new Gallery
+            </button>
+          </Card.Footer>
         </Card>
       )}
       <CreateGalleryModal
         isVisible={showCreateModal}
         toggleVisible={toggleCreateModal}
+        userId={userId}
+      />
+      <UploadPictureModal
+        isVisible={showUploadModal}
+        toggleVisible={toggleUploadModal}
         userId={userId}
       />
     </>
