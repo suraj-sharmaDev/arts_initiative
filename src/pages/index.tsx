@@ -8,7 +8,7 @@ import { Creative, Features, HeroSection } from "@/components/interfaces/Home";
 
 const Home: NextPageWithLayout = (props) => {
   return (
-    <div>
+    <div className="w-full space-y-6">
       <HeroSection />
       <Features />
       <Creative />
