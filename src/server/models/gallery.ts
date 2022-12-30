@@ -16,7 +16,7 @@ export const getGallery = async (query: NextApiRequestQuery | any) => {
             },
             {
               $lookup: {
-                from: "artworks",
+                from: "artwork",
                 localField: "_id",
                 foreignField: "galleryId",
                 as: "artworks",

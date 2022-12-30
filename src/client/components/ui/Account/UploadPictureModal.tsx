@@ -14,12 +14,14 @@ interface Props {
   isVisible: boolean;
   toggleVisible: () => void;
   userId: string;
+  galleryId: string | null | undefined;
 }
 
 const UploadPictureModal: React.FC<Props> = ({
   isVisible = false,
   toggleVisible,
   userId,
+  galleryId,
 }) => {
   const { mutate } = useSWRConfig();
   const formik = useFormik({
@@ -34,20 +36,19 @@ const UploadPictureModal: React.FC<Props> = ({
       artworkImage: Yup.mixed().required(),
     }),
     onSubmit: async (values) => {
-      const formData = jsonToFormData(values);
+      const formData = jsonToFormData({ ...values, galleryId });
       const response = await axios.post("/api/artwork", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log(response);
-      //   const { error }: ApiResponse<any> = response.data;
-      //   if (error) {
-      //     toast.error(error.message);
-      //     return;
-      //   }
-      //   mutate(`/api/gallery?userId=${userId}`);
-      //   formik.resetForm();
-      //   toast.success("Successfully added gallery");
-      //   toggleVisible();
+      const { error }: ApiResponse<any> = response.data;
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      mutate(`/api/gallery?userId=${userId}`);
+      formik.resetForm();
+      toast.success("Successfully added gallery");
+      toggleVisible();
     },
   });
 

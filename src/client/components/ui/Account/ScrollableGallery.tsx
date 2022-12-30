@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Stack, Carousel } from "react-daisyui";
 import CreateGalleryModal from "./CreateGalleryModal";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
@@ -14,12 +14,14 @@ type Props = {
 const ScrollableGallery = ({ galleryItems, heading, userId }: Props) => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const currentFocusedGalleryId = useRef<string | null | undefined>(null);
 
   const toggleCreateModal = () => {
     setShowCreateModal(!showCreateModal);
   };
 
-  const toggleUploadModal = () => {
+  const toggleUploadModal = (galleryId?: string) => {
+    currentFocusedGalleryId.current = showUploadModal ? null : galleryId;
     setShowUploadModal(!showUploadModal);
   };
 
@@ -48,7 +50,7 @@ const ScrollableGallery = ({ galleryItems, heading, userId }: Props) => {
                   <div className="h-[15rem] w-[13rem] rounded bg-primary hover:animate-pulse">
                     {gD.artworks.length == 0 ? (
                       <button
-                        onClick={toggleUploadModal}
+                        onClick={() => toggleUploadModal(gD._id)}
                         className="flex h-full w-full flex-col items-center justify-center text-white"
                       >
                         <ArrowUpCircleIcon className="mb-4 h-20 w-20" />
@@ -58,7 +60,7 @@ const ScrollableGallery = ({ galleryItems, heading, userId }: Props) => {
                       <Stack>
                         {gD.artworks.map((iD: any, jdx: number) => (
                           <img
-                            src={iD.src}
+                            src={"/api/getfile/" + iD.artworkImage}
                             key={gD.title + jdx}
                             className={`h-full w-full`}
                           />
@@ -89,6 +91,7 @@ const ScrollableGallery = ({ galleryItems, heading, userId }: Props) => {
         isVisible={showUploadModal}
         toggleVisible={toggleUploadModal}
         userId={userId}
+        galleryId={currentFocusedGalleryId.current}
       />
     </>
   );

@@ -1,6 +1,7 @@
 import formidable from "formidable";
 import { promises as fs } from "fs";
 import path from "path";
+import { createRandomString, extractFileExt } from "./commons";
 
 const baseDirectory = path.join(process.cwd(), "/public/uploads");
 
@@ -13,9 +14,11 @@ const upload = async (file: formidable.File, folderName: string) => {
   }
 
   const tempPath = file.filepath;
-  await fs.cp(tempPath, uploadDirectory + "/" + file.originalFilename);
+  const newFilename =
+    createRandomString(8) + "." + extractFileExt(file.originalFilename);
+  await fs.cp(tempPath, uploadDirectory + "/" + newFilename);
   await fs.unlink(tempPath);
-  return true;
+  return "uploads/" + folderName + "/" + newFilename;
 };
 
 export default upload;

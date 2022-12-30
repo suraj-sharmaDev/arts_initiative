@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import getFilesInReq from "@/lib/getFilesInReq";
 import upload from "@/lib/upload";
 import formidable from "formidable";
+import { createArtwork } from "@/models/artwork";
 
 export const config = {
   api: {
@@ -26,6 +27,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+// eslint-disable-next-line
 const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {};
 
 const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -38,12 +40,19 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
       .status(200)
       .json({ error: { message: "Could not upload file" }, data: null });
   }
-  for (const key in files) {
-    const file = files[key] as formidable.File;
-    await upload(file, userId ? userId : "temp");
+
+  if (!fields) {
+    return res
+      .status(200)
+      .json({ error: { message: "Could not parse form data!" }, data: null });
   }
 
-  res.status(200).json({
-    ok: "bok",
-  });
+  for (const untypedKey in files) {
+    const key = untypedKey as string;
+    const file = files[key] as formidable.File;
+    const filePath = await upload(file, userId ? userId : "temp");
+    if (fields) fields[key] = filePath as string;
+  }
+  const artwork = createArtwork(fields as any);
+  return res.status(200).json({ data: artwork, error: null });
 };

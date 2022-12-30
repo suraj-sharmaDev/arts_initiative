@@ -1,4 +1,5 @@
 import type { NextApiRequest } from "next";
+import path from "path";
 
 export const createRandomString = (length = 6) => {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -36,4 +37,9 @@ export const jsonToUrlQuery = (obj: object | any) => {
   return Object.keys(obj).reduce((query: string, key: string) => {
     return query + key + "=" + obj[key] + "&";
   }, "?");
+};
+
+export const extractFileExt = (fileName: string | null) => {
+  if (fileName == null) return null;
+  return path.extname(fileName).split(".")[1];
 };
