@@ -5,13 +5,18 @@ import { GetServerSidePropsContext } from "next";
 import env from "@/lib/env";
 import { getSession } from "@/lib/session";
 import { Creative, Features, HeroSection } from "@/components/interfaces/Home";
+import { useRouter } from "next/router";
 
 const Home: NextPageWithLayout = (props) => {
+  const router = useRouter();
+
+  const onClickCartBtn = () => router.push("/auth/login");
+
   return (
     <div className="w-full space-y-6">
       <HeroSection />
-      <Features />
-      <Creative />
+      <Features onClickCartBtn={onClickCartBtn} />
+      <Creative onClickCartBtn={onClickCartBtn} />
     </div>
   );
 };
