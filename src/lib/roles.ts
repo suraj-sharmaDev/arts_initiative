@@ -8,7 +8,7 @@ export const availableRoles = [
     name: "Admin",
   },
   {
-    id: "owner",
-    name: "Owner",
+    id: "artist",
+    name: "Artist",
   },
 ];

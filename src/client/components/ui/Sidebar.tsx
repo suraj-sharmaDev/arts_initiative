@@ -36,10 +36,10 @@ export default function Sidebar() {
               <ul className="space-y-2 pb-2">
                 <li>
                   <NavItem
-                    href="/account/dashboard"
+                    href="/account"
                     text="Home"
                     icon={HomeIcon}
-                    active={router.pathname === "/account/dashboard"}
+                    active={router.pathname === "/account"}
                     onClick={sidebarToggler}
                   />
                 </li>
@@ -54,10 +54,10 @@ export default function Sidebar() {
                 </li>
                 <li>
                   <NavItem
-                    href="/account/orders"
-                    text="Orders"
+                    href="/account/cart"
+                    text="Cart"
                     icon={ShoppingBagIcon}
-                    active={router.pathname === "/account/orders"}
+                    active={router.pathname === "/account/cart"}
                     onClick={sidebarToggler}
                   />
                 </li>

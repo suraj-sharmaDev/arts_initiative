@@ -43,7 +43,7 @@ export default function Navbar() {
               </svg>
             </button>
             <Link
-              href="/account/dashboard"
+              href="/account"
               className="flex items-center text-xl font-bold lg:ml-2.5"
             >
               <span className="self-center whitespace-nowrap text-primary">

@@ -4,25 +4,15 @@ import { Card } from "@/components/ui";
 import { GetServerSidePropsContext } from "next";
 import { getSession } from "@/lib/session";
 import env from "@/lib/env";
-import useGallery from "src/hooks/useGallery";
+import { TopCollections } from "@/components/interfaces/Account/Client/Home";
 
-const Dashboard: NextPageWithLayout = () => {
+const Home: NextPageWithLayout = () => {
   const { data: session } = useSession();
-  const gallery = useGallery();
-
-  console.log(gallery?.gallery);
 
   return (
-    <Card heading="Dashboard">
-      <Card.Body>
-        <div className="p-3">
-          <p className="text-sm">
-            {`Hi, ${session?.user.name} 
-              "you-have-logged-in-using" ${session?.user.email}`}
-          </p>
-        </div>
-      </Card.Body>
-    </Card>
+    <div>
+      <TopCollections />
+    </div>
   );
 };
 
@@ -46,4 +36,4 @@ export const getServerSideProps = async (
   };
 };
 
-export default Dashboard;
+export default Home;

@@ -1,5 +1,5 @@
+import { MultiCarousel } from "@/components/ui";
 import { FireIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { Carousel } from "react-daisyui";
 
 const data = {
   artistName: "John Doe",
@@ -25,30 +25,31 @@ export default function Features({ onClickCartBtn }: Props) {
         <h1 className="text-2xl font-semibold">Featured</h1>
       </div>
       <p className="mb-4 font-medium">Weekly featured arts</p>
-      <Carousel className="gap-4 px-5 lg:gap-10">
+      <MultiCarousel>
         {[1, 2, 3, 4, 5, 6].map((d, idx) => (
-          <Carousel.Item key={idx}>
-            <div className="place-content-center space-y-2 rounded border-[0.1rem] border-white p-3 text-right">
-              <div className="flex w-full place-content-center rounded-full">
-                <UserCircleIcon className="h-12 w-12" />
-              </div>
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg"
-                className="h-[12rem] w-[14rem] rounded lg:h-60 lg:w-[20rem]"
-              />
-              <div className="flex items-center justify-between">
-                <button
-                  className="rounded border border-white px-4 py-1 text-white hover:bg-white hover:text-primary"
-                  onClick={onClickCartBtn}
-                >
-                  Add Cart
-                </button>
-                <span className="text-sm"> - Artist Name</span>
-              </div>
+          <div
+            className="w-full place-content-center space-y-2 rounded rounded border-[0.1rem] border-white p-3 text-right md:w-5/6"
+            key={idx}
+          >
+            <div className="flex w-full place-content-center rounded-full">
+              <UserCircleIcon className="h-12 w-12" />
             </div>
-          </Carousel.Item>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg"
+              className="h-[12rem] w-full rounded lg:h-60"
+            />
+            <div className="flex items-center justify-between">
+              <button
+                className="rounded border border-primary px-4 py-1 hover:bg-primary hover:text-white"
+                onClick={onClickCartBtn}
+              >
+                Add Cart
+              </button>
+              <span className="text-sm"> - Artist Name</span>
+            </div>
+          </div>
         ))}
-      </Carousel>
+      </MultiCarousel>
     </div>
   );
 }

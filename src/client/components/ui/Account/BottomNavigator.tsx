@@ -8,9 +8,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const Menus = [
-  { title: "Home", icon: HomeIcon, href: "/account/dashboard" },
+  { title: "Home", icon: HomeIcon, href: "/account" },
   { title: "Explore", icon: MagnifyingGlassIcon, href: "/account/explore" },
-  { title: "Orders", icon: ShoppingBagIcon, href: "/account/orders" },
+  { title: "Cart", icon: ShoppingBagIcon, href: "/account/cart" },
   { title: "Profile", icon: UserIcon, href: "/account/profile" },
 ];
 
