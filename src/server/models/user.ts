@@ -17,6 +17,8 @@ export const createUser = async (param: {
     password: password ? password : "",
     emailVerified: new Date(),
     role: role ? role : availableRoles.member,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
 };
 
@@ -58,6 +60,20 @@ export const getUserRoleBySession = async (session: Session | null) => {
   });
 };
 
+// this is highly protected route only accesible by admin
+export const getAllUsers = async (query: object) => {
+  return new Promise((resolve, reject) => {
+    getMongoDb().then((db) => {
+      db.collection("users")
+        .find(query)
+        .toArray((err, result) => {
+          if (err) throw err;
+          resolve(JSON.parse(JSON.stringify(result)));
+        });
+    });
+  });
+};
+
 export const updateUser = async (
   key: { _id: ObjectId } | { email: string },
   params: {
@@ -67,7 +83,7 @@ export const updateUser = async (
   const db = await getMongoDb();
   return await db
     .collection("users")
-    .updateOne({ ...key }, { $set: { ...params } });
+    .updateOne({ ...key }, { $set: { ...params, updatedAt: new Date() } });
 };
 
 export const deleteUser = async (key: { _id: string } | { email: string }) => {

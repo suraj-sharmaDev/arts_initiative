@@ -1,6 +1,5 @@
 import { GetServerSidePropsContext } from "next";
-
-import ScrollableGallery from "@/components/ui/Account/ScrollableGallery";
+import ScrollableGallery from "@/components/ui/Account/Client/ScrollableGallery";
 import { Alert, Error, Loading } from "@/components/ui";
 import { inferSSRProps } from "@/lib/inferSSRProps";
 import { NextPageWithLayout } from "@/types/next";

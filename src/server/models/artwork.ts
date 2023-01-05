@@ -11,5 +11,7 @@ export const createArtwork = async (param: {
   return await db.collection("artwork").insertOne({
     ...param,
     galleryId: new ObjectId(param.galleryId),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
 };

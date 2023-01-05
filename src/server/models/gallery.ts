@@ -44,6 +44,8 @@ export const createGallery = async (
     galleryName,
     galleryDescription,
     userId,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
 };
 

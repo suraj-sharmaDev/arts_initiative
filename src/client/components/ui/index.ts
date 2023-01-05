@@ -13,3 +13,4 @@ export { default as Loading } from "./Loading";
 export { default as Error } from "./Error";
 export { default as InputFileWithPreview } from "./InputFileWithPreview";
 export { default as MultiCarousel } from "./MultiCarousel";
+export { default as CustomModal } from "./CustomModal";

@@ -35,7 +35,9 @@ export async function generateServerSideProps(
             },
           }
         : {
-            props: {},
+            props: {
+              userId: "",
+            },
           }),
     };
   }

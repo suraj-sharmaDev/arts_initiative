@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Sidebar, Navbar, Error, Loading } from "@/components/ui";
-import { BottomNavigator } from "../ui/Account";
+import { BottomNavigator } from "@/components/ui/Account/Client";
 
 export default function AccountLayout({
   children,

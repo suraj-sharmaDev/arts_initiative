@@ -6,7 +6,7 @@ import { Modal, Button } from "react-daisyui";
 import { toast } from "react-hot-toast";
 import { useSWRConfig } from "swr";
 import * as Yup from "yup";
-import InputWithLabel from "../InputWithLabel";
+import InputWithLabel from "../../InputWithLabel";
 
 interface Props {
   isVisible: boolean;
