@@ -1,13 +1,11 @@
 import { GetServerSidePropsContext } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import ScrollableGallery from "@/components/ui/Account/ScrollableGallery";
 import { Alert, Error, Loading } from "@/components/ui";
-import env from "@/lib/env";
 import { inferSSRProps } from "@/lib/inferSSRProps";
-import { getSession } from "@/lib/session";
 import { NextPageWithLayout } from "@/types/next";
 import useGallery from "@/hooks/useGallery";
+import { generateServerSideProps } from "@/lib/auth";
 
 const Profile: NextPageWithLayout<inferSSRProps<typeof getServerSideProps>> = ({
   userId,
@@ -36,23 +34,7 @@ const Profile: NextPageWithLayout<inferSSRProps<typeof getServerSideProps>> = ({
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const session = await getSession(context.req, context.res);
-  const { locale }: GetServerSidePropsContext = context;
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: env.redirectOnunAuth,
-      },
-    };
-  }
-
-  return {
-    props: {
-      ...(locale ? await serverSideTranslations(locale, ["common"]) : {}),
-      userId: session.user.id,
-    },
-  };
+  return generateServerSideProps(context);
 };
 
 export default Profile;
