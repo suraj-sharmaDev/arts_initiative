@@ -22,7 +22,7 @@ export async function getRedirectUrlFromSession(session: Session) {
 
 export async function generateServerSideProps(
   context: GetServerSidePropsContext,
-  forceLogin: Boolean = true
+  forceLogin = true
 ) {
   const session = await getSession(context.req, context.res);
   const { locale }: GetServerSidePropsContext = context;

@@ -12,7 +12,7 @@ const TopCollections = () => {
       <div className="px-3">
         <MultiCarousel>
           {[1, 2, 3, 4, 5, 6].map((d, idx) => (
-            <Stack></Stack>
+            <Stack key={d}></Stack>
           ))}
         </MultiCarousel>
       </div>

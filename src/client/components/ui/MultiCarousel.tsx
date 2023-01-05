@@ -2,7 +2,7 @@ import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-var settings: Settings = {
+const settings: Settings = {
   dots: true,
   infinite: true,
   speed: 500,
