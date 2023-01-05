@@ -4,8 +4,8 @@ import { NextPageWithLayout } from "@/types/next";
 import { GetServerSidePropsContext } from "next/types";
 import { ReactElement } from "react";
 
-const Home: NextPageWithLayout = () => {
-  return <div>This is admin</div>;
+const Collection: NextPageWithLayout = () => {
+  return <div>Create Artist</div>;
 };
 
 export const getServerSideProps = async (
@@ -14,8 +14,8 @@ export const getServerSideProps = async (
   return generateServerSideProps(context);
 };
 
-Home.getLayout = function getLayout(page: ReactElement) {
+Collection.getLayout = function getLayout(page: ReactElement) {
   return <AdminLayout>{page}</AdminLayout>;
 };
 
-export default Home;
+export default Collection;

@@ -1,18 +1,17 @@
 import React from "react";
 
-import { Sidebar, Navbar, Error, Loading } from "@/components/ui";
-import { BottomNavigator } from "../ui/Account";
+import { AdminNavbar, AdminSidebar, Error, Loading } from "@/components/ui";
 
-export default function ArtistLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <>
-      <Navbar />
+      <AdminNavbar />
       <div className="flex overflow-hidden pt-16">
-        <Sidebar />
+        <AdminSidebar />
         <div className="relative h-full w-full overflow-y-auto lg:ml-64">
           <main>
             <div className="flex h-screen w-full justify-center">
@@ -21,7 +20,6 @@ export default function ArtistLayout({
           </main>
         </div>
       </div>
-      <BottomNavigator />
     </>
   );
 }

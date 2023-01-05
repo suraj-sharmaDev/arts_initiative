@@ -21,15 +21,22 @@ export async function getRedirectUrlFromSession(session: Session) {
 }
 
 export async function generateServerSideProps(
-  context: GetServerSidePropsContext
+  context: GetServerSidePropsContext,
+  forceLogin: Boolean = true
 ) {
   const session = await getSession(context.req, context.res);
   const { locale }: GetServerSidePropsContext = context;
   if (!session) {
     return {
-      redirect: {
-        destination: env.redirectOnunAuth,
-      },
+      ...(forceLogin
+        ? {
+            redirect: {
+              destination: env.redirectOnunAuth,
+            },
+          }
+        : {
+            props: {},
+          }),
     };
   }
   const currentPath = context.resolvedUrl.split("/")[1];

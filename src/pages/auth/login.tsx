@@ -17,17 +17,26 @@ import env from "@/lib/env";
 import { getCsrfToken, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
+import axios from "axios";
+import { availableRoles } from "@/lib/roles";
 
 const Login: NextPageWithLayout<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ csrfToken, redirectAfterSignIn }) => {
-  const { status } = useSession();
+  const { data, status } = useSession();
   const router = useRouter();
   const { t } = useTranslation("common");
 
   useEffect(() => {
     if (status == "authenticated") {
-      router.push(redirectAfterSignIn);
+      (async () => {
+        const { data } = await axios.get("/api/user");
+        if (data?.data?.role) {
+          router.push(availableRoles?.[data.data.role].redirectAfterAuth);
+          return;
+        }
+        router.push(redirectAfterSignIn);
+      })();
     }
   }, [status]);
 
@@ -47,7 +56,6 @@ const Login: NextPageWithLayout<
         password,
         csrfToken,
         redirect: false,
-        callbackUrl: redirectAfterSignIn,
       });
 
       if (response?.error) {
@@ -127,13 +135,13 @@ export const getServerSideProps = async (
 ) => {
   const { req, res, locale }: GetServerSidePropsContext = context;
   const session = await getSession(req, res);
-  if (session) {
-    return {
-      redirect: {
-        destination: env.redirectAfterSignIn,
-      },
-    };
-  }
+  // if (session) {
+  //   return {
+  //     redirect: {
+  //       destination: env.redirectAfterSignIn,
+  //     },
+  //   };
+  // }
   console.log("here in getsERVERPOPR");
   const cookieParsed = getParsedCookie(req, res);
   console.log({ cookieParsed });
