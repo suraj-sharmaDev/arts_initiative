@@ -13,7 +13,7 @@ import InputWithLabel from "../../InputWithLabel";
 interface Props {
   isVisible: boolean;
   toggleVisible: () => void;
-  userId: string;
+  userId: string | undefined;
   galleryId: string | null | undefined;
 }
 
@@ -45,7 +45,8 @@ const UploadPictureModal: React.FC<Props> = ({
         toast.error(error.message);
         return;
       }
-      mutate(`/api/gallery?userId=${userId}`);
+      const mutateUrl = `/api/gallery` + (userId ? "?userId=${userId}" : "");
+      mutate(mutateUrl);
       formik.resetForm();
       toast.success("Successfully added gallery");
       toggleVisible();

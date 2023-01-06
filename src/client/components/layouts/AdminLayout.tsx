@@ -14,7 +14,7 @@ export default function AdminLayout({
         <AdminSidebar />
         <div className="relative h-full w-full overflow-y-auto lg:ml-64">
           <main>
-            <div className="flex h-screen w-full justify-center">
+            <div className="flex w-full justify-center">
               <div className="w-full px-6 py-6">{children}</div>
             </div>
           </main>

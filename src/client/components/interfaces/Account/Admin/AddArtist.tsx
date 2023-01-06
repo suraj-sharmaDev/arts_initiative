@@ -51,7 +51,7 @@ export default function AddArtist() {
       <Button
         color="secondary"
         size="md"
-        className="w-full lg:w-1/6"
+        className="w-full md:w-1/3 lg:w-1/6"
         onClick={toggleVisible}
       >
         Add

@@ -10,8 +10,8 @@ import { jsonToUrlQuery } from "@/lib/commons";
  * @returns
  *
  */
-const useGallery = (userId: string) => {
-  const url = `/api/gallery?userId=${userId}`;
+const useGallery = (userId: string | undefined) => {
+  const url = `/api/gallery` + (userId ? "?userId=${userId}" : "");
   const { data, error } = useSWR<ApiResponse<any>>(url, fetcher);
   return {
     isLoading: !error && !data,
