@@ -15,6 +15,7 @@ interface Props {
   toggleVisible: () => void;
   userId: string | undefined;
   galleryId: string | null | undefined;
+  onUploadSuccess?: undefined | (() => void);
 }
 
 const UploadPictureModal: React.FC<Props> = ({
@@ -22,6 +23,7 @@ const UploadPictureModal: React.FC<Props> = ({
   toggleVisible,
   userId,
   galleryId,
+  onUploadSuccess,
 }) => {
   const { mutate } = useSWRConfig();
   const formik = useFormik({
@@ -50,6 +52,7 @@ const UploadPictureModal: React.FC<Props> = ({
       formik.resetForm();
       toast.success("Successfully added gallery");
       toggleVisible();
+      onUploadSuccess && onUploadSuccess();
     },
   });
 

@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import getFilesInReq from "@/lib/getFilesInReq";
 import upload from "@/lib/upload";
 import formidable from "formidable";
-import { createArtwork } from "@/models/artwork";
+import { createArtwork, deleteArtwork } from "@/models/artwork";
 
 export const config = {
   api: {
@@ -18,6 +18,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       return handleGET(req, res);
     case "POST":
       return handlePOST(req, res);
+    case "DELETE":
+      return handleDELETE(req, res);
     default:
       res.setHeader("Allow", ["GET", "POST"]);
       res.status(405).json({
@@ -28,7 +30,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 // eslint-disable-next-line
-const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {};
+const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
+  return res.status(200).json({ data: "incomplete route", error: null });
+};
 
 const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession(req, res);
@@ -54,5 +58,19 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
     if (fields) fields[key] = filePath as string;
   }
   const artwork = createArtwork(fields as any);
+  return res.status(200).json({ data: artwork, error: null });
+};
+
+const handleDELETE = async (req: NextApiRequest, res: NextApiResponse) => {
+  const artworkId = req.query.artworkId?.[0];
+  if (!artworkId) {
+    return res.status(200).json({
+      data: null,
+      error: {
+        message: "ArtworkId not passed as params",
+      },
+    });
+  }
+  const artwork = await deleteArtwork({ artworkId });
   return res.status(200).json({ data: artwork, error: null });
 };

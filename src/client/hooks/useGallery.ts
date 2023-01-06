@@ -10,13 +10,14 @@ import { jsonToUrlQuery } from "@/lib/commons";
  * @returns
  *
  */
-const useGallery = (userId: string | undefined) => {
-  const url = `/api/gallery` + (userId ? "?userId=${userId}" : "");
-  const { data, error } = useSWR<ApiResponse<any>>(url, fetcher);
+const useGallery = (query: object) => {
+  const url = `/api/gallery` + jsonToUrlQuery(query);
+  const { data, error, mutate } = useSWR<ApiResponse<any>>(url, fetcher);
   return {
     isLoading: !error && !data,
     isError: error,
     userGallery: data?.data,
+    mutate,
   };
 };
 

@@ -9,7 +9,7 @@ import { generateServerSideProps } from "@/lib/auth";
 const Profile: NextPageWithLayout<inferSSRProps<typeof getServerSideProps>> = ({
   userId,
 }) => {
-  const { isLoading, isError, userGallery } = useGallery(userId);
+  const { isLoading, isError, userGallery } = useGallery({ userId });
 
   if (isLoading) {
     return <Loading />;

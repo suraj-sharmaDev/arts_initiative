@@ -1,14 +1,16 @@
 import { Error, Loading } from "@/components/ui";
 import { UploadPictureModal } from "@/components/ui/Account/Client";
 import useGallery from "@/hooks/useGallery";
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { Button, Stack } from "react-daisyui";
 
 export default function ListArtist() {
-  const { isLoading, isError, userGallery } = useGallery(undefined);
+  const { isLoading, isError, userGallery } = useGallery({});
   const [isVisible, setVisible] = useState(false);
   const currentGalleryId = useRef<string | null>(null);
+  const router = useRouter();
 
   const toggleVisible = (galleryId: string | undefined) => {
     if (isVisible) {
@@ -17,6 +19,10 @@ export default function ListArtist() {
       currentGalleryId.current = galleryId;
     }
     setVisible(!isVisible);
+  };
+
+  const openSingleCollection = (collectionId: string) => {
+    router.push(`/admin/singleCollection?collectionId=${collectionId}`);
   };
 
   if (isLoading) return <Loading />;
@@ -29,8 +35,14 @@ export default function ListArtist() {
           return (
             <li
               key={a._id}
-              className="w-full rounded bg-neutral p-5 text-center text-white md:w-1/4 lg:w-1/6"
+              className="relative w-full rounded bg-neutral p-5 text-center text-white md:w-1/4 lg:w-1/6"
             >
+              <button
+                className="absolute top-0 right-1"
+                onClick={() => openSingleCollection(a._id)}
+              >
+                <PencilSquareIcon className="h-8 w-8 text-primary" />
+              </button>
               <p>{a.galleryName}</p>
               {a.artworks.length == 0 ? (
                 <div className="flex h-[10rem] w-full flex-col bg-accent p-5">

@@ -4,13 +4,13 @@ import { Modal } from "react-daisyui";
 interface Props {
   isVisible: boolean;
   toggleVisible: () => void;
-  responsive: boolean;
+  responsive?: boolean;
   children: React.ReactNode;
 }
 const CustomModal = ({
   isVisible,
   toggleVisible,
-  responsive,
+  responsive = true,
   children,
 }: Props) => {
   return (

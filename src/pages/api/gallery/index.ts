@@ -31,7 +31,7 @@ const handleGET = async (req: NextApiRequest, res: NextApiResponse) => {
   const { userId, galleryId } = req.query;
   const gallery = await getGallery({
     ...(userId && { userId: new ObjectId(userId as string) }),
-    ...(galleryId && { galleryId: new ObjectId(galleryId as string) }),
+    ...(galleryId && { _id: new ObjectId(galleryId as string) }),
   });
   return res.status(200).json({ data: gallery, error: null });
 };

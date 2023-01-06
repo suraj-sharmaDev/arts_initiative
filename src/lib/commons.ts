@@ -34,6 +34,7 @@ export const extractAuthToken = (req: NextApiRequest): string | null => {
 
 // create url query from json object
 export const jsonToUrlQuery = (obj: object | any) => {
+  if (Object.keys(obj).length == 0) return "";
   return Object.keys(obj).reduce((query: string, key: string) => {
     return query + key + "=" + obj[key] + "&";
   }, "?");
