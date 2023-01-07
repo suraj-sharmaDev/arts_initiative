@@ -18,7 +18,7 @@ export const availableRoles: AvailableRoles = {
   member: {
     id: "member",
     name: "Member",
-    redirectAfterAuth: "/account",
+    redirectAfterAuth: "/",
   },
   admin: {
     id: "admin",

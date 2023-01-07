@@ -6,7 +6,6 @@ import {
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "react-daisyui";
 import Searchbar from "./Searchbar";
 
 export default function BaseNavbar() {
@@ -20,7 +19,9 @@ export default function BaseNavbar() {
     <nav className="fixed top-0 left-0 z-[120] w-full items-center bg-primary py-4 px-8 text-white shadow-md md:flex md:justify-between lg:px-10 lg:py-5">
       {/* Brand and Searchbar */}
       <div className="flex w-full items-center justify-around md:w-4/6">
-        <span className="text-xl lg:text-2xl">Arted</span>
+        <Link href={"/"}>
+          <span className="text-xl lg:text-2xl">Arted</span>
+        </Link>
         <Searchbar />
       </div>
 
@@ -39,9 +40,12 @@ export default function BaseNavbar() {
         }`}
       >
         <li>
-          <button className="rounded bg-white px-5 py-1 text-primary">
+          <Link
+            href="/auth/login"
+            className="rounded bg-white px-5 py-2 text-primary"
+          >
             Login
-          </button>
+          </Link>
         </li>
         <li>
           <button className="text-white md:px-5 md:py-1">
