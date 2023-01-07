@@ -91,7 +91,7 @@ export default function BaseNavbar({ pageProps }: Props) {
             <div>
               <Dropdown
                 title={
-                  (pageProps.user.name || session.data?.user.name)?.split(
+                  (pageProps?.user?.name || session.data?.user?.name)?.split(
                     " "
                   )[0]
                 }
