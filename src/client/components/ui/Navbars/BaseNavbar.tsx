@@ -1,83 +1,62 @@
+import {
+  Bars3Icon,
+  ShoppingCartIcon,
+  UserIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
-
-const NavItems = [
-  {
-    title: "Features",
-    to: "/#features",
-  },
-  {
-    title: "Creative",
-    to: "/#creative",
-  },
-  {
-    title: "Popular",
-    to: "/#popular",
-  },
-];
+import { useState } from "react";
+import { Button } from "react-daisyui";
+import Searchbar from "./Searchbar";
 
 export default function BaseNavbar() {
-  const toggleNavbar = () => {
-    const collapsableBaseNavbar = document.getElementById(
-      "collapsableBaseNavbar"
-    );
-    if (collapsableBaseNavbar?.classList.contains("block")) {
-      collapsableBaseNavbar?.classList.remove("block");
-      collapsableBaseNavbar?.classList.add("hidden");
-    } else {
-      collapsableBaseNavbar?.classList.remove("hidden");
-      collapsableBaseNavbar?.classList.add("block");
-    }
+  const [isCollapsed, setCollapsed] = useState(false);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!isCollapsed);
   };
+
   return (
-    <nav className="flex flex-wrap items-center justify-between bg-white p-5 lg:px-10">
-      <div className="mr-6 flex flex-shrink-0 items-center">
-        <Link href={"/"}>
-          <span className="text-xl font-bold text-primary">
-            Arts Initiative
-          </span>
-        </Link>
+    <nav className="fixed top-0 left-0 z-[120] w-full items-center bg-primary py-4 px-8 text-white shadow-md md:flex md:justify-between lg:px-10 lg:py-5">
+      {/* Brand and Searchbar */}
+      <div className="flex w-full items-center justify-around md:w-4/6">
+        <span className="text-xl lg:text-2xl">Arted</span>
+        <Searchbar />
       </div>
-      <div className="block lg:hidden">
-        <button
-          className="flex items-center rounded border border-white px-3 py-2 hover:border-secondary hover:text-secondary"
-          onClick={toggleNavbar}
-        >
-          <svg
-            className="h-4 w-4 fill-current"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-          </svg>
-        </button>
-      </div>
-      <div
-        className="hidden w-full flex-grow lg:flex lg:w-auto lg:items-center"
-        id="collapsableBaseNavbar"
+
+      {/* Hamburger Menu */}
+      <button
+        className="absolute top-5 left-2 h-8 w-8 cursor-pointer md:hidden"
+        onClick={toggleCollapsed}
       >
-        <div className="text-md lg:flex lg:flex-grow lg:items-end lg:justify-end">
-          {NavItems.map((n, idx) => {
-            return (
-              <Link
-                href={n.to}
-                className="mr-4 mt-4 block lg:mx-10 lg:mt-0 lg:inline-block"
-                key={idx.toString()}
-              >
-                {n.title}
-              </Link>
-            );
-          })}
-        </div>
-        <div>
-          <a
-            href="#"
-            className="mt-4 inline-block rounded border border-white px-4 py-2 text-sm leading-none hover:border-transparent hover:bg-white hover:text-teal-500 lg:mt-0"
-          >
-            Download
-          </a>
-        </div>
-      </div>
+        {!isCollapsed ? <Bars3Icon /> : <XMarkIcon />}
+      </button>
+
+      {/* Collapsibel Nav Items */}
+      <ul
+        className={`absolute left-0 z-[100] flex flex-col gap-6 bg-primary p-8 transition-all duration-500 ease-in md:static md:z-auto md:flex-row md:items-center md:gap-5 md:p-0 ${
+          isCollapsed ? "left-0" : "left-[-200px]"
+        }`}
+      >
+        <li>
+          <button className="rounded bg-white px-5 py-1 text-primary">
+            Login
+          </button>
+        </li>
+        <li>
+          <button className="text-white md:px-5 md:py-1">
+            Become a seller
+          </button>
+        </li>
+        <li className="flex">
+          <ShoppingCartIcon className="mr-2 h-6 w-6" />
+          <span className="block md:hidden">Cart</span>
+        </li>
+        <li className="flex">
+          <UserIcon className="mr-2 h-6 w-6" />
+          <span className="block md:hidden">Profile</span>
+        </li>
+      </ul>
     </nav>
   );
 }
