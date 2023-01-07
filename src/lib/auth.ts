@@ -41,6 +41,7 @@ export async function generateServerSideProps(
         : {
             props: {
               userId: "",
+              user: undefined,
             },
           }),
     };
@@ -60,6 +61,7 @@ export async function generateServerSideProps(
     props: {
       ...(locale ? await serverSideTranslations(locale, ["common"]) : {}),
       userId: session.user.id,
+      user: session.user,
     },
   };
 }
