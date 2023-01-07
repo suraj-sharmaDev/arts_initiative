@@ -2,7 +2,7 @@ const env = {
   databaseUrl: `${process.env.DATABASE_URL}`,
   appUrl: `${process.env.APP_URL}`,
   product: "protoflow-app",
-  redirectAfterSignIn: "/account",
+  redirectAfterSignIn: "/",
   redirectOnunAuth: "/auth/login",
 
   // SMTP configuration for NextAuth

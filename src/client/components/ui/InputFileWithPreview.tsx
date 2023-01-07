@@ -29,7 +29,11 @@ const InputFileWithPreview = ({
         {uploadedFile && (
           <div>
             <img
-              src={URL.createObjectURL(uploadedFile)}
+              src={
+                uploadedFile instanceof File
+                  ? URL.createObjectURL(uploadedFile)
+                  : (("/api/getfile/" + uploadedFile) as string)
+              }
               className="h-24 w-24"
             />
           </div>
@@ -52,7 +56,7 @@ interface InputProps {
   onChange?(x: React.ChangeEvent<HTMLInputElement>): void;
   error?: string | any;
   descriptionText?: string;
-  uploadedFile: undefined | Blob | MediaSource;
+  uploadedFile: undefined | Blob | MediaSource | string;
 }
 
 export default InputFileWithPreview;

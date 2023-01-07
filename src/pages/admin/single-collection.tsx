@@ -3,14 +3,15 @@ import { Loading, Error, CustomModal } from "@/components/ui";
 import { UploadPictureModal } from "@/components/ui/Account/Client";
 import useGallery from "@/hooks/useGallery";
 import { generateServerSideProps } from "@/lib/auth";
+import jsonToFormData from "@/lib/jsonToFormData";
 import { ApiResponse } from "@/types/index";
 import { NextPageWithLayout } from "@/types/next";
-import { XCircleIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next/types";
 import { ReactElement, useRef, useState } from "react";
-import { Button, ButtonGroup } from "react-daisyui";
+import { Button, Toggle } from "react-daisyui";
 import toast from "react-hot-toast";
 
 const SingleCollection: NextPageWithLayout = () => {
@@ -22,8 +23,14 @@ const SingleCollection: NextPageWithLayout = () => {
   const [isVisible, setVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const currentSelectedArtId = useRef<string | null>(null);
+  const [currentSelectedArtEdit, setSelectedArtEdit] = useState(null);
 
-  const toggleVisible = () => {
+  const toggleVisible = (artData = null) => {
+    if (!isVisible && artData != null) {
+      setSelectedArtEdit(artData);
+    } else {
+      setSelectedArtEdit(null);
+    }
     setVisible(!isVisible);
   };
 
@@ -46,6 +53,19 @@ const SingleCollection: NextPageWithLayout = () => {
     toggleDeleteVisible();
   };
 
+  const onSponsorArt = async (artworkId: string, bool: boolean) => {
+    const formData = jsonToFormData({ isSponsored: bool });
+    await axios({
+      url: "/api/artwork" + "/" + artworkId,
+      method: "PUT",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+    });
+    mutate();
+  };
+
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
@@ -53,7 +73,7 @@ const SingleCollection: NextPageWithLayout = () => {
     <div>
       <h1 className="text-center">Artworks inside Collection</h1>
       <div className="alert mb-4">
-        <Button size="md" color="primary" onClick={toggleVisible}>
+        <Button size="md" color="primary" onClick={() => toggleVisible()}>
           <span className="text-sm">Add Artwork</span>
         </Button>
       </div>
@@ -68,18 +88,36 @@ const SingleCollection: NextPageWithLayout = () => {
                 className="relative w-full rounded bg-primary p-4 text-center text-white md:w-1/4 lg:w-1/6"
               >
                 <button
+                  className="absolute top-0 left-0"
+                  onClick={() => toggleVisible(a)}
+                >
+                  <PencilSquareIcon className="h-8 w-8" />
+                </button>
+                <button
                   className="absolute top-0 right-0"
                   onClick={() => toggleDeleteVisible(a._id)}
                 >
                   <XCircleIcon className="h-8 w-8" />
                 </button>
-                <p>{a.artworkName}</p>
-                <p>{a.artworkDescription}</p>
-                <div className="p-4">
-                  <img
-                    src={"/api/getfile/" + a.artworkImage}
-                    className={`h-[13rem] w-full rounded`}
-                  />
+                <div className="mt-3">
+                  <p>{a.artworkName}</p>
+                  <p>{a.artworkDescription}</p>
+                  <div className="p-4">
+                    <img
+                      src={"/api/getfile/" + a.artworkImage}
+                      className={`h-[13rem] w-full rounded`}
+                    />
+                  </div>
+                  <div>
+                    <span>Sponsor this art</span>
+                    <Toggle
+                      color="primary"
+                      checked={a?.isSponsored}
+                      onChange={(event) =>
+                        onSponsorArt(a._id, event.target.checked)
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             );
@@ -92,6 +130,8 @@ const SingleCollection: NextPageWithLayout = () => {
         toggleVisible={toggleVisible}
         userId={undefined}
         onUploadSuccess={mutate}
+        methodType={currentSelectedArtEdit == null ? "POST" : "PUT"}
+        existingArtData={currentSelectedArtEdit}
       />
       <CustomModal
         isVisible={deleteVisible}

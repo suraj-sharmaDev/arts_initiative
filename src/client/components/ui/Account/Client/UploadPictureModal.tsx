@@ -17,6 +17,17 @@ interface Props {
   userId: string | undefined;
   galleryId: string | null | undefined;
   onUploadSuccess?: undefined | (() => void);
+  methodType?: string;
+  existingArtData?:
+    | undefined
+    | null
+    | {
+        _id: string;
+        artworkName: string;
+        artworkDescription: string;
+        artworkImage: any;
+        artworkCategory: string;
+      };
 }
 
 const UploadPictureModal: React.FC<Props> = ({
@@ -25,14 +36,16 @@ const UploadPictureModal: React.FC<Props> = ({
   userId,
   galleryId,
   onUploadSuccess,
+  methodType = "POST",
+  existingArtData,
 }) => {
   const { mutate } = useSWRConfig();
   const formik = useFormik({
     initialValues: {
-      artworkName: "",
-      artworkDescription: "",
-      artworkImage: undefined,
-      artworkCategory: "",
+      artworkName: existingArtData?.artworkName || "",
+      artworkDescription: existingArtData?.artworkDescription || "",
+      artworkImage: existingArtData?.artworkImage || undefined,
+      artworkCategory: existingArtData?.artworkCategory || "",
     },
     validationSchema: Yup.object().shape({
       artworkName: Yup.string().required(),
@@ -41,9 +54,21 @@ const UploadPictureModal: React.FC<Props> = ({
       artworkCategory: Yup.string().required(),
     }),
     onSubmit: async (values) => {
+      // we also need to check if file type data is re-updated before sending
+      if (!(values.artworkImage instanceof File)) {
+        // that means we are not uploading new file so remove this key
+        delete values["artworkImage"];
+      }
       const formData = jsonToFormData({ ...values, galleryId });
-      const response = await axios.post("/api/artwork", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await axios({
+        url:
+          "/api/artwork" +
+          (methodType == "PUT" ? `/${existingArtData?._id}` : ""),
+        method: methodType,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: formData,
       });
       const { error }: ApiResponse<any> = response.data;
       if (error) {
@@ -57,6 +82,7 @@ const UploadPictureModal: React.FC<Props> = ({
       toggleVisible();
       onUploadSuccess && onUploadSuccess();
     },
+    enableReinitialize: true,
   });
 
   return (
