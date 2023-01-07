@@ -23,7 +23,8 @@ export default function BaseNavbar({ pageProps }: Props) {
   const session = useSession();
   const [isCollapsed, setCollapsed] = useState(true);
   const isUserLoggedIn =
-    typeof pageProps?.user != undefined || session.status == "authenticated";
+    typeof pageProps?.user != "undefined" || session.status == "authenticated";
+
   const router = useRouter();
   const navRef = useRef(null);
   useOnClickOutside(navRef, () => setCollapsed(true));
