@@ -16,10 +16,7 @@ interface Props {
 
 export default function Creative({ onClickCartBtn }: Props) {
   return (
-    <div
-      className="w-full rounded border border-primary p-6 pb-10 text-primary"
-      id="creative"
-    >
+    <div className="w-full rounded p-6 pb-10 text-primary" id="creative">
       <div className="mb-5 flex items-center">
         <FireIcon className="h-8 w-8" />
         <h1 className="text-2xl font-semibold">Creative</h1>

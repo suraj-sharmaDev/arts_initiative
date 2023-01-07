@@ -4,7 +4,11 @@ import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import env from "./env";
-import { availableRoles, whiteListedPathForRole } from "./roles";
+import {
+  availableRoles,
+  blackListedPathForRole,
+  whiteListedPathForRole,
+} from "./roles";
 import { getSession } from "./session";
 
 export async function hashPassword(password: string) {
@@ -44,18 +48,18 @@ export async function generateServerSideProps(
   const currentPath = context.resolvedUrl.split("/")[1];
   const userRole = await getUserRoleBySession(session);
   // we have to now test if the user is allowed in this url
-  if (whiteListedPathForRole?.[userRole] == currentPath) {
+  if (blackListedPathForRole?.[userRole].includes(currentPath)) {
+    // if user enters restricted path then redirect
     return {
-      props: {
-        ...(locale ? await serverSideTranslations(locale, ["common"]) : {}),
-        userId: session.user.id,
+      redirect: {
+        destination: whiteListedPathForRole?.[userRole],
       },
     };
   }
-  // else redirect
   return {
-    redirect: {
-      destination: whiteListedPathForRole?.[userRole],
+    props: {
+      ...(locale ? await serverSideTranslations(locale, ["common"]) : {}),
+      userId: session.user.id,
     },
   };
 }

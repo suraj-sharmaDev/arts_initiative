@@ -10,6 +10,10 @@ type WhiteListedPathForRole = {
   [key: string]: string;
 };
 
+type BlackListedPathForRole = {
+  [key: string]: Array<string>;
+};
+
 export const availableRoles: AvailableRoles = {
   member: {
     id: "member",
@@ -29,7 +33,13 @@ export const availableRoles: AvailableRoles = {
 };
 
 export const whiteListedPathForRole: WhiteListedPathForRole = {
-  member: "account",
-  admin: "admin",
-  artist: "artist",
+  member: "/",
+  admin: "/admin",
+  artist: "/artist",
+};
+
+export const blackListedPathForRole: BlackListedPathForRole = {
+  member: ["admin, artist"],
+  admin: [],
+  artist: ["admin"],
 };
