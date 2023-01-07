@@ -17,7 +17,7 @@ import Dropdown from "../Dropdown";
 import Searchbar from "./Searchbar";
 
 interface Props {
-  pageProps: any;
+  pageProps?: any;
 }
 export default function BaseNavbar({ pageProps }: Props) {
   const session = useSession();
