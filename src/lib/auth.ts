@@ -41,7 +41,7 @@ export async function generateServerSideProps(
         : {
             props: {
               userId: "",
-              user: undefined,
+              user: null,
             },
           }),
     };
