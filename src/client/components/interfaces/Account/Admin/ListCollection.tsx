@@ -22,7 +22,7 @@ export default function ListArtist() {
   };
 
   const openSingleCollection = (collectionId: string) => {
-    router.push(`/admin/singleCollection?collectionId=${collectionId}`);
+    router.push(`/admin/single-collection?collectionId=${collectionId}`);
   };
 
   if (isLoading) return <Loading />;

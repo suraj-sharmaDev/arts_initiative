@@ -7,7 +7,6 @@ export default function ListArtist() {
 
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
-  console.log(artists);
 
   return (
     <div className="mt-5 w-full">

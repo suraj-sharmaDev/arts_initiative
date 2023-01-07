@@ -9,6 +9,7 @@ import { useSWRConfig } from "swr";
 import * as Yup from "yup";
 import InputFileWithPreview from "../../InputFileWithPreview";
 import InputWithLabel from "../../InputWithLabel";
+import SelectInput from "../../SelectInput";
 
 interface Props {
   isVisible: boolean;
@@ -31,11 +32,13 @@ const UploadPictureModal: React.FC<Props> = ({
       artworkName: "",
       artworkDescription: "",
       artworkImage: undefined,
+      artworkCategory: "",
     },
     validationSchema: Yup.object().shape({
       artworkName: Yup.string().required(),
       artworkDescription: Yup.string().required(),
       artworkImage: Yup.mixed().required(),
+      artworkCategory: Yup.string().required(),
     }),
     onSubmit: async (values) => {
       const formData = jsonToFormData({ ...values, galleryId });
@@ -92,6 +95,20 @@ const UploadPictureModal: React.FC<Props> = ({
                   : undefined
               }
               onChange={formik.handleChange}
+            />
+            <SelectInput
+              label="Artwork Category"
+              name="artworkCategory"
+              error={
+                formik.touched.artworkCategory
+                  ? formik.errors.artworkCategory
+                  : undefined
+              }
+              onChange={(value) =>
+                formik.setFieldValue("artworkCategory", value)
+              }
+              selectableList={["a", "b", "c", "d"]}
+              placeholder="Select Category for your artwork"
             />
             <InputFileWithPreview
               label="Upload Picture of Art"

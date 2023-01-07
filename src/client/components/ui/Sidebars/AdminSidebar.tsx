@@ -4,6 +4,7 @@ import {
   ArrowLeftCircleIcon,
   LightBulbIcon,
   Square3Stack3DIcon,
+  PaintBrushIcon,
 } from "@heroicons/react/24/solid";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -57,6 +58,15 @@ export default function Sidebar() {
                     text="Collections"
                     icon={Square3Stack3DIcon}
                     active={router.pathname === "/admin/collection"}
+                    onClick={sidebarToggler}
+                  />
+                </li>
+                <li>
+                  <NavItem
+                    href="/admin/art-category"
+                    text="Art Category"
+                    icon={PaintBrushIcon}
+                    active={router.pathname === "/admin/art-category"}
                     onClick={sidebarToggler}
                   />
                 </li>

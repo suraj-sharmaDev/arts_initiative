@@ -21,7 +21,9 @@ const NavItem = ({
       <span
         onClick={onClick}
         className={classNames(
-          active ? "bg-primary text-white" : "",
+          active
+            ? "bg-primary text-white hover:bg-primary hover:text-white"
+            : "",
           "flex items-center rounded-lg p-2 text-sm font-semibold text-gray-900 hover:bg-gray-100 hover:text-gray-900"
         )}
       >
