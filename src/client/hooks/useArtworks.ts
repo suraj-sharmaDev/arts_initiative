@@ -10,8 +10,8 @@ import { jsonToUrlQuery } from "@/lib/commons";
  * @returns
  *
  */
-const useSponsoredArt = () => {
-  const url = "/api/artwork?isSponsored=true";
+const useArtworks = () => {
+  const url = "/api/artwork";
   const { data, error, mutate } = useSWR<ApiResponse<any>>(url, fetcher);
   return {
     isLoading: !error && !data,
@@ -21,4 +21,4 @@ const useSponsoredArt = () => {
   };
 };
 
-export default useSponsoredArt;
+export default useArtworks;

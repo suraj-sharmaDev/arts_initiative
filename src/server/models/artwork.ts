@@ -3,6 +3,7 @@ import unlink from "@/lib/unlink";
 import { ObjectId } from "mongodb";
 
 export const getArtwork = async (param: {
+  _id?: ObjectId;
   artworkName?: string;
   artworkDescription?: string;
   galleryId?: ObjectId;
@@ -16,6 +17,63 @@ export const getArtwork = async (param: {
         .toArray((error, result) => {
           if (error) throw error;
           resolve(JSON.parse(JSON.stringify(result)));
+        });
+    });
+  });
+};
+
+export const getSingleArtworkDetail = async (param: {
+  _id?: ObjectId;
+  artworkName?: string;
+  artworkDescription?: string;
+  galleryId?: ObjectId;
+  artworkImage?: string;
+  isSponsored?: boolean;
+}) => {
+  return new Promise((resolve, reject) => {
+    getMongoDb().then((db) => {
+      db.collection("artwork")
+        .aggregate([
+          {
+            $match: {
+              ...param,
+            },
+          },
+          {
+            $lookup: {
+              from: "gallery",
+              localField: "galleryId",
+              foreignField: "_id",
+              as: "galleryDetails",
+            },
+          },
+          {
+            $lookup: {
+              from: "users",
+              localField: "galleryDetails.userId",
+              foreignField: "_id",
+              as: "artistDetails",
+            },
+          },
+          { $unwind: "$galleryDetails" },
+          { $unwind: "$artistDetails" },
+          {
+            $project: {
+              _id: 1,
+              artworkName: 1,
+              artworkDescription: 1,
+              artworkImage: 1,
+              artworkPrice: 1,
+              createdAt: 1,
+              galleryDetails: 1,
+              "artistDetails._id": 1,
+              "artistDetails.name": 1,
+            },
+          },
+        ])
+        .toArray((error, result) => {
+          if (error) throw error;
+          resolve(JSON.parse(JSON.stringify(result?.[0])));
         });
     });
   });

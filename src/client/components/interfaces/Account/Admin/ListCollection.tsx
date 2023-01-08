@@ -2,6 +2,7 @@ import { Error, Loading } from "@/components/ui";
 import { UploadPictureModal } from "@/components/ui/Account/Client";
 import useGallery from "@/hooks/useGallery";
 import { PencilSquareIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { Button, Stack } from "react-daisyui";
@@ -65,10 +66,13 @@ export default function ListArtist() {
                   </div>
                   <Stack>
                     {a.artworks.map((art: any) => (
-                      <img
+                      <Image
+                        width={300}
+                        height={300}
                         src={"/api/getfile/" + art.artworkImage}
                         key={art._id}
                         className={`h-[10rem] w-full rounded`}
+                        alt={art.artworkImage}
                       />
                     ))}
                   </Stack>

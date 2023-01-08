@@ -1,22 +1,23 @@
-import { MultiCarousel } from "@/components/ui";
+import { Error, Loading, MultiCarousel } from "@/components/ui";
+import useArtworks from "@/hooks/useArtworks";
 import { FireIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-
-const data = {
-  artistName: "John Doe",
-  pictureName: "Morning rise",
-  artistImage: "string",
-  pictureDiscription: "string",
-  artistLink: "string",
-  pictureLink: "string",
-};
+import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   onClickCartBtn: () => void;
 }
 
 export default function Creative({ onClickCartBtn }: Props) {
+  const { isError, isLoading, artworks } = useArtworks();
+  if (isError) return <Error />;
+  if (isLoading) return <Loading />;
+  if (artworks == null) return null;
   return (
-    <div className="w-full rounded p-6 pb-10 text-primary" id="creative">
+    <div
+      className="w-full rounded py-6 pb-10 text-primary md:p-6"
+      id="creative"
+    >
       <div className="mb-5 flex items-center">
         <FireIcon className="h-8 w-8" />
         <h1 className="text-2xl font-semibold">Creative</h1>
@@ -24,31 +25,31 @@ export default function Creative({ onClickCartBtn }: Props) {
       <p className="mb-4 font-medium">
         Selected list of popular creative artworks
       </p>
-      <MultiCarousel>
-        {[1, 2, 3, 4, 5, 6].map((d, idx) => (
-          <div
-            className="w-full place-content-center space-y-2 rounded rounded border-[0.1rem] border-primary p-3 text-right md:w-5/6"
-            key={idx}
+      <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4 md:gap-10 lg:grid-cols-5">
+        {artworks.map((artwork: any, idx) => (
+          <Link
+            className="cursor-pointer place-content-center space-y-2 rounded bg-white shadow-md hover:shadow-xl"
+            key={artwork._id}
+            href={"/artwork/" + artwork._id}
           >
-            <div className="flex w-full place-content-center rounded-full">
-              <UserCircleIcon className="h-12 w-12" />
-            </div>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg"
-              className="h-[12rem] w-full rounded lg:h-60"
+            <Image
+              src={"/api/getfile/" + artwork.artworkImage}
+              width={300}
+              height={300}
+              className="h-[12rem] w-full rounded md:h-48 lg:h-60"
+              alt={artwork.artworkImage}
             />
-            <div className="flex items-center justify-between">
-              <button
-                className="rounded border border-primary px-4 py-1 hover:bg-primary hover:text-white"
-                onClick={onClickCartBtn}
-              >
-                Add Cart
-              </button>
-              <span className="text-sm"> - Artist Name</span>
+            <div className="px-1 text-gray-500">
+              <p className="truncate text-sm md:text-clip">
+                {artwork.artworkName}
+              </p>
+              <p className="text-md font-bold text-primary">
+                Rs. {artwork.artworkPrice}
+              </p>
             </div>
-          </div>
+          </Link>
         ))}
-      </MultiCarousel>
+      </div>
     </div>
   );
 }

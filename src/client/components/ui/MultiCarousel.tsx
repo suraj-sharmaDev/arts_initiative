@@ -1,13 +1,15 @@
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Children } from "react";
 
-const settings: Settings = {
+const defaultSettings: Settings = {
   dots: true,
   infinite: true,
   speed: 500,
   slidesToShow: 4,
   slidesToScroll: 1,
+  lazyLoad: "progressive",
   responsive: [
     {
       breakpoint: 1024,
@@ -41,6 +43,8 @@ interface Props {
 }
 
 const MultiCarousel = ({ children }: Props) => {
+  const slidesToShow = Math.min(Children.count(children), 4);
+  const settings = { ...defaultSettings, slidesToShow };
   return (
     <Slider className="w-full" {...settings}>
       {children}

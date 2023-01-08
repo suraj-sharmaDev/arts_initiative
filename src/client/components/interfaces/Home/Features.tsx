@@ -1,4 +1,5 @@
-import { MultiCarousel } from "@/components/ui";
+import { Error, Loading, MultiCarousel } from "@/components/ui";
+import useSponsoredArt from "@/hooks/useSponsoredArt";
 import { FireIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
 const data = {
@@ -15,6 +16,11 @@ interface Props {
 }
 
 export default function Features({ onClickCartBtn }: Props) {
+  const { isError, isLoading, artworks } = useSponsoredArt();
+  if (isError) return <Error />;
+  if (isLoading) return <Loading />;
+  if (artworks == null) return null;
+
   return (
     <div
       className="w-full rounded border border-primary bg-primary p-6 pb-10 text-white"
@@ -26,7 +32,7 @@ export default function Features({ onClickCartBtn }: Props) {
       </div>
       <p className="mb-4 font-medium">Weekly featured arts</p>
       <MultiCarousel>
-        {[1, 2, 3, 4, 5, 6].map((d, idx) => (
+        {artworks.map((artwork: any, idx) => (
           <div
             className="w-full place-content-center space-y-2 rounded rounded border-[0.1rem] border-white p-3 text-right md:w-5/6"
             key={idx}
@@ -35,17 +41,12 @@ export default function Features({ onClickCartBtn }: Props) {
               <UserCircleIcon className="h-12 w-12" />
             </div>
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg"
+              src={"/api/getfile/" + artwork.artworkImage}
               className="h-[12rem] w-full rounded lg:h-60"
             />
             <div className="flex items-center justify-between">
-              <button
-                className="rounded border border-primary px-4 py-1 hover:bg-primary hover:text-white"
-                onClick={onClickCartBtn}
-              >
-                Add Cart
-              </button>
-              <span className="text-sm"> - Artist Name</span>
+              <span>Rs. {artwork.artworkPrice}</span>
+              <span className="text-sm"> - {artwork.artworkName}</span>
             </div>
           </div>
         ))}
