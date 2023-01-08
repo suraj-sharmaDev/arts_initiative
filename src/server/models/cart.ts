@@ -3,10 +3,16 @@ import { NextApiRequestQuery } from "next/dist/server/api-utils";
 import { ObjectId } from "mongodb";
 
 export const getUserCart = async (key: { userId: string }) => {
-  const db = await getMongoDb();
-  return await db
-    .collection("cart")
-    .findOne({ userId: new ObjectId(key.userId) });
+  return new Promise((resolve, reject) => {
+    getMongoDb().then((db) => {
+      db.collection("cart")
+        .find({ userId: new ObjectId(key.userId) })
+        .toArray((error, result) => {
+          if (error) throw error;
+          resolve(JSON.parse(JSON.stringify(result)));
+        });
+    });
+  });
 };
 
 export const createUserCart = async (
@@ -19,7 +25,8 @@ export const createUserCart = async (
   const db = await getMongoDb();
   return await db.collection("cart").insertOne({
     userId: new ObjectId(key.userId),
-    items: { ...param },
+    ...(param.artworkId && { artworkId: new ObjectId(param.artworkId) }),
+    ...(param.price && { price: param.price }),
     createdAt: new Date(),
     updatedAt: new Date(),
   });
