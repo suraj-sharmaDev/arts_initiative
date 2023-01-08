@@ -27,6 +27,7 @@ interface Props {
         artworkDescription: string;
         artworkImage: any;
         artworkCategory: string;
+        artworkPrice: string;
       };
 }
 
@@ -46,12 +47,14 @@ const UploadPictureModal: React.FC<Props> = ({
       artworkDescription: existingArtData?.artworkDescription || "",
       artworkImage: existingArtData?.artworkImage || undefined,
       artworkCategory: existingArtData?.artworkCategory || "",
+      artworkPrice: existingArtData?.artworkPrice || "",
     },
     validationSchema: Yup.object().shape({
       artworkName: Yup.string().required(),
       artworkDescription: Yup.string().required(),
       artworkImage: Yup.mixed().required(),
       artworkCategory: Yup.string().required(),
+      artworkPrice: Yup.string().required(),
     }),
     onSubmit: async (values) => {
       // we also need to check if file type data is re-updated before sending
@@ -122,6 +125,19 @@ const UploadPictureModal: React.FC<Props> = ({
               }
               onChange={formik.handleChange}
             />
+            <InputWithLabel
+              type="number"
+              label="Artwork Price"
+              name="artworkPrice"
+              placeholder="e.g) 0.0"
+              value={formik.values.artworkPrice}
+              error={
+                formik.touched.artworkPrice
+                  ? formik.errors.artworkPrice
+                  : undefined
+              }
+              onChange={formik.handleChange}
+            />
             <SelectInput
               label="Artwork Category"
               name="artworkCategory"
@@ -160,7 +176,9 @@ const UploadPictureModal: React.FC<Props> = ({
               loading={formik.isSubmitting}
               active={formik.dirty}
             >
-              <span>Upload Picture</span>
+              <span>
+                {methodType == "POST" ? "Upload Picture" : "Update Picture"}
+              </span>
             </Button>
           </div>
         </form>

@@ -1,7 +1,8 @@
 import type { GetServerSidePropsContext } from "next";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
+import { ObjectId } from "mongodb";
 
-export const getParsedCookie = (
+export const getInviteParsedCookie = (
   req: GetServerSidePropsContext["req"],
   res: GetServerSidePropsContext["res"]
 ): {
@@ -15,5 +16,28 @@ export const getParsedCookie = (
     : {
         token: null,
         url: null,
+      };
+};
+
+export const getGuestUserParsedCookie = (
+  req: GetServerSidePropsContext["req"],
+  res: GetServerSidePropsContext["res"]
+): {
+  userId: string | null;
+} => {
+  let cookie = getCookie("guest-user-id", { req, res });
+  if (cookie == undefined) {
+    // if it doesn't exist then generate one
+    const userId = new ObjectId();
+    setCookie("guest-user-id", { userId }, { req, res });
+    cookie = JSON.stringify({
+      userId,
+    });
+  }
+
+  return cookie
+    ? JSON.parse(cookie as string)
+    : {
+        userId: null,
       };
 };

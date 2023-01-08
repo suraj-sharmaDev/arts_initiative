@@ -1,4 +1,3 @@
-import type { Session } from "next-auth";
 import { getMongoDb } from "@/lib/mongodb";
 import { NextApiRequestQuery } from "next/dist/server/api-utils";
 import { ObjectId } from "mongodb";

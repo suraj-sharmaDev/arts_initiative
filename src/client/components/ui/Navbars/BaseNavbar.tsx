@@ -1,10 +1,8 @@
-import useOnClickOutside from "@/hooks/useOnClickOutside";
 import {
   Bars3Icon,
   ClipboardIcon,
   HeartIcon,
   PowerIcon,
-  ShoppingCartIcon,
   UserCircleIcon,
   UserIcon,
   XMarkIcon,
@@ -13,19 +11,20 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
+import useOnClickOutside from "@/hooks/useOnClickOutside";
 import Dropdown from "../Dropdown";
 import Searchbar from "./Searchbar";
+import CartButton from "./CartButton";
 
 interface Props {
   pageProps?: any;
 }
 export default function BaseNavbar({ pageProps }: Props) {
   const session = useSession();
+  const router = useRouter();
   const [isCollapsed, setCollapsed] = useState(true);
   const isUserLoggedIn =
     pageProps?.user != null || session.status == "authenticated";
-
-  const router = useRouter();
   const navRef = useRef(null);
   useOnClickOutside(navRef, () => setCollapsed(true));
 
@@ -114,8 +113,7 @@ export default function BaseNavbar({ pageProps }: Props) {
           </button>
         </li>
         <li className="flex">
-          <ShoppingCartIcon className="mr-2 h-6 w-6" />
-          <span className="block md:hidden">Cart</span>
+          <CartButton />
         </li>
         <li className="flex">
           <UserIcon className="mr-2 h-6 w-6" />

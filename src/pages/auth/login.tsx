@@ -10,7 +10,7 @@ import { Button } from "react-daisyui";
 
 import { InputWithLabel } from "@/components/ui";
 import { AuthLayout } from "@/components/layouts";
-import { getParsedCookie } from "@/lib/cookie";
+import { getInviteParsedCookie } from "@/lib/cookie";
 import GoogleButton from "@/components/interfaces/Auth/GoogleButton";
 import { getSession } from "@/lib/session";
 import env from "@/lib/env";
@@ -143,7 +143,7 @@ export const getServerSideProps = async (
   //   };
   // }
   console.log("here in getsERVERPOPR");
-  const cookieParsed = getParsedCookie(req, res);
+  const cookieParsed = getInviteParsedCookie(req, res);
   console.log({ cookieParsed });
   return {
     props: {

@@ -9,7 +9,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import type { NextPageWithLayout } from "@/types/index";
 import { AuthLayout } from "@/components/layouts";
 import { inferSSRProps } from "@/lib/inferSSRProps";
-import { getParsedCookie } from "@/lib/cookie";
+import { getInviteParsedCookie } from "@/lib/cookie";
 import JoinWithInvitation from "@/components/interfaces/Auth/JoinWithInvitation";
 import Join from "@/components/interfaces/Auth/Join";
 import GoogleButton from "@/components/interfaces/Auth/GoogleButton";
@@ -68,7 +68,7 @@ export const getServerSideProps = async (
 ) => {
   const { req, res, locale }: GetServerSidePropsContext = context;
 
-  const cookieParsed = getParsedCookie(req, res);
+  const cookieParsed = getInviteParsedCookie(req, res);
 
   return {
     props: {
