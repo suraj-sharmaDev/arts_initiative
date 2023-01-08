@@ -70,7 +70,7 @@ const handleDELETE = async (req: NextApiRequest, res: NextApiResponse) => {
   const { cartId } = req.query;
   const data = await deleteUserCart({
     ...(userId && { userId: userId as string }),
-    ...(cartId && { _id: cartId as string }),
+    ...(cartId && { _id: cartId[0] as string }),
   });
   return res.status(200).json({ data, error: null });
 };

@@ -6,7 +6,20 @@ export const getUserCart = async (key: { userId: string }) => {
   return new Promise((resolve, reject) => {
     getMongoDb().then((db) => {
       db.collection("cart")
-        .find({ userId: new ObjectId(key.userId) })
+        .aggregate([
+          {
+            $match: { userId: new ObjectId(key.userId) },
+          },
+          {
+            $lookup: {
+              from: "artwork",
+              localField: "artworkId",
+              foreignField: "_id",
+              as: "artwork",
+            },
+          },
+          { $unwind: "$artwork" },
+        ])
         .toArray((error, result) => {
           if (error) throw error;
           resolve(JSON.parse(JSON.stringify(result)));

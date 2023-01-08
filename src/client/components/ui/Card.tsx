@@ -23,8 +23,18 @@ const Body = ({
   return <div className={`${className} bg-white`}>{children}</div>;
 };
 
-const Footer = ({ children }: { children: React.ReactNode }) => {
-  return <div className="border-t border-gray-300 py-3 px-3">{children}</div>;
+const Footer = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <div className={`border-t border-gray-300 py-3 px-3 ${className}`}>
+      {children}
+    </div>
+  );
 };
 
 Card.Body = Body;
