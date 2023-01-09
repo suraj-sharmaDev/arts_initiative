@@ -45,12 +45,12 @@ export default function BaseNavbar({ pageProps }: Props) {
     {
       title: "Orders",
       icon: <ClipboardIcon className="h-5 w-5" />,
-      onClick: () => navigateToPath("/orders"),
+      onClick: () => navigateToPath("/account/orders"),
     },
     {
-      title: "Wishlist",
+      title: "Favourites",
       icon: <HeartIcon className="h-5 w-5" />,
-      onClick: () => navigateToPath("/wishlist"),
+      onClick: () => navigateToPath("/account/favourites"),
     },
     {
       title: "Logout",
@@ -82,8 +82,8 @@ export default function BaseNavbar({ pageProps }: Props) {
 
       {/* Collapsible Nav Items */}
       <ul
-        className={`absolute left-0 z-[100] flex flex-col gap-6 bg-primary p-8 transition-all duration-500 ease-in md:static md:z-auto md:flex-row md:items-center md:gap-5 md:p-0 ${
-          isCollapsed ? "left-[-200px]" : "left-0"
+        className={`absolute left-0 z-[100] flex flex-col gap-6 bg-primary py-12 pl-6 pr-20 transition-all duration-500 ease-in md:static md:z-auto md:flex-row md:items-center md:gap-5 md:p-0 ${
+          isCollapsed ? "left-[-300px]" : "left-0"
         }`}
       >
         <li className="hidden md:block">
@@ -112,13 +112,36 @@ export default function BaseNavbar({ pageProps }: Props) {
             Become a seller
           </button>
         </li>
-        <li className="flex">
+        <li>
           <CartButton />
         </li>
-        <li className="flex">
-          <UserIcon className="mr-2 h-6 w-6" />
-          <span className="block md:hidden">Profile</span>
-        </li>
+        {isUserLoggedIn ? (
+          <>
+            {LoggedInDropDownUser.map((item, idx) => (
+              <li
+                className="block flex cursor-pointer items-center gap-2 md:hidden"
+                onClick={item.onClick}
+              >
+                {item.icon}
+                <span>{item.title}</span>
+              </li>
+            ))}
+            <li className="hidden md:block">
+              <Link className="flex" href="/account">
+                <UserIcon className="mr-2 h-6 w-6" />
+              </Link>
+            </li>
+          </>
+        ) : (
+          <li>
+            <Link
+              href="/auth/login"
+              className="rounded bg-white px-5 py-2 text-primary"
+            >
+              Login
+            </Link>
+          </li>
+        )}
       </ul>
     </nav>
   );

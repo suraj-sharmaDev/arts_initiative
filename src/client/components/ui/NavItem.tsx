@@ -23,8 +23,8 @@ const NavItem = ({
         className={classNames(
           active
             ? "bg-primary text-white hover:bg-primary hover:text-white"
-            : "",
-          "flex items-center rounded-lg p-2 text-sm font-semibold text-gray-900 hover:bg-gray-100 hover:text-gray-900"
+            : "text-gray-900 hover:bg-gray-100 hover:text-gray-900",
+          "flex items-center rounded-lg p-2 text-sm font-semibold"
         )}
       >
         <Icon className="h-5 w-5" />
