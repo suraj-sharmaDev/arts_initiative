@@ -1,15 +1,16 @@
 import NextAuth, { NextAuthOptions, Account, User } from "next-auth";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import EmailProvider from "next-auth/providers/email";
-import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { ObjectId } from "mongodb";
 import env from "@/lib/env";
-import { hashPassword, verifyPassword } from "@/lib/auth";
+import { verifyPassword } from "@/lib/auth";
 import clientPromise from "@/lib/mongodb";
-import { createUser, getUser } from "@/models/user";
+import { getUser } from "@/models/user";
 import { getAccount } from "@/models/account";
+import { NextApiRequest, NextApiResponse } from "next";
+import { updateUserCart } from "@/models/cart";
+import { deleteCookie } from "cookies-next";
 
 const adapter = MongoDBAdapter(clientPromise);
 
@@ -81,7 +82,38 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-export default NextAuth(authOptions);
+const getOptions = (
+  req: NextApiRequest,
+  res: NextApiResponse
+): NextAuthOptions => {
+  return {
+    ...authOptions,
+    callbacks: {
+      ...authOptions.callbacks,
+      async signIn({ user }) {
+        // if user had added items to cart before login
+        // handle the cart updation here
+        const userId = user.id;
+        const guestCookie = req?.cookies?.["guest-user-id"];
+        if (guestCookie) {
+          // update all the cart items added by user as guest
+          const parsedCookie = JSON.parse(guestCookie);
+          await updateUserCart(
+            { userId: parsedCookie.userId },
+            {
+              userId: new ObjectId(userId),
+            }
+          );
+          deleteCookie("guest-user-id", { req, res });
+        }
+        return true;
+      },
+    },
+  };
+};
+
+export default (req: NextApiRequest, res: NextApiResponse) =>
+  NextAuth(req, res, getOptions(req, res));
 
 const linkAccount = async (user: User, account: Account) => {
   return await adapter.linkAccount({

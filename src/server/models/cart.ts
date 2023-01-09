@@ -55,7 +55,7 @@ export const updateUserCart = async (
       ...(key._id && { _id: new ObjectId(key._id) }),
       ...(key.userId && { userId: new ObjectId(key.userId) }),
     },
-    { ...param }
+    { $set: { ...param } }
   );
 };
 

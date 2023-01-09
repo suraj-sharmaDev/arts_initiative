@@ -7,7 +7,7 @@ import {
   UserIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
@@ -55,7 +55,7 @@ export default function BaseNavbar({ pageProps }: Props) {
     {
       title: "Logout",
       icon: <PowerIcon className="h-5 w-5" />,
-      onClick: () => navigateToPath("/logout"),
+      onClick: () => signOut(),
     },
   ];
 
