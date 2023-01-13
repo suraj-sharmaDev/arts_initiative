@@ -3,7 +3,7 @@ import { Modal } from "react-daisyui";
 
 interface Props {
   isVisible: boolean;
-  toggleVisible: () => void;
+  toggleVisible?: () => void;
   responsive?: boolean;
   children: React.ReactNode;
 }

@@ -40,6 +40,9 @@ export async function generateServerSideProps(
           }
         : {
             props: {
+              ...(locale
+                ? await serverSideTranslations(locale, ["common"])
+                : {}),
               userId: "",
               user: null,
             },

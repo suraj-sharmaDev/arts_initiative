@@ -121,6 +121,7 @@ export default function BaseNavbar({ pageProps }: Props) {
               <li
                 className="block flex cursor-pointer items-center gap-2 md:hidden"
                 onClick={item.onClick}
+                key={idx}
               >
                 {item.icon}
                 <span>{item.title}</span>
