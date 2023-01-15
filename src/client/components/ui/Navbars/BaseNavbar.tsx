@@ -119,7 +119,7 @@ export default function BaseNavbar({ pageProps }: Props) {
           <>
             {LoggedInDropDownUser.map((item, idx) => (
               <li
-                className="block flex cursor-pointer items-center gap-2 md:hidden"
+                className="flex cursor-pointer items-center gap-2 md:hidden"
                 onClick={item.onClick}
                 key={idx}
               >

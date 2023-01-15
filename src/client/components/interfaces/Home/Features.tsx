@@ -1,6 +1,8 @@
-import { Error, Loading, MultiCarousel } from "@/components/ui";
+import { Error, Loading } from "@/components/ui";
 import useSponsoredArt from "@/hooks/useSponsoredArt";
-import { FireIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { CheckBadgeIcon, FireIcon } from "@heroicons/react/24/solid";
+import Image from "next/image";
+import Link from "next/link";
 
 const data = {
   artistName: "John Doe",
@@ -31,26 +33,30 @@ export default function Features({ onClickCartBtn }: Props) {
         <h1 className="text-2xl font-semibold">Featured</h1>
       </div>
       <p className="mb-4 font-medium">Weekly featured arts</p>
-      <MultiCarousel>
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5">
         {artworks.map((artwork: any, idx) => (
-          <div
-            className="w-full place-content-center space-y-2 rounded border-[0.1rem] border-white p-3 text-right md:w-5/6"
+          <Link
+            className="relative rounded border-[0.1rem] border-white text-right shadow-md hover:shadow-xl"
             key={idx}
+            href={"/artwork/" + artwork._id}
           >
-            <div className="flex w-full place-content-center rounded-full">
-              <UserCircleIcon className="h-12 w-12" />
+            <CheckBadgeIcon className="absolute h-9 w-9 text-white" />
+            <div className="place-content-center space-y-2">
+              <Image
+                width={500}
+                height={500}
+                src={artwork.artworkImage}
+                className="h-[10rem] w-full rounded md:h-48 lg:h-60"
+                alt={artwork.artworkName}
+              />
+              <div className="flex items-center justify-between p-1 text-sm">
+                <span>Rs. {artwork.artworkPrice}</span>
+                <span className="truncate"> - {artwork.artworkName}</span>
+              </div>
             </div>
-            <img
-              src={artwork.artworkImage}
-              className="h-[12rem] w-full rounded lg:h-60"
-            />
-            <div className="flex items-center justify-between">
-              <span>Rs. {artwork.artworkPrice}</span>
-              <span className="text-sm"> - {artwork.artworkName}</span>
-            </div>
-          </div>
+          </Link>
         ))}
-      </MultiCarousel>
+      </div>
     </div>
   );
 }
