@@ -1,14 +1,28 @@
+import { setCookies } from "cookies-next";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import Card from "../Card";
 
 export default function OrderSummary({
   totalItems,
   totalPrice,
-  onPlaceOrder,
 }: {
   totalItems: string | number | undefined;
   totalPrice: string | number | undefined;
-  onPlaceOrder: () => void;
 }) {
+  const session = useSession();
+  const router = useRouter();
+  const isLoggedIn = session.status == "authenticated";
+
+  const onPlaceOrder = () => {
+    if (isLoggedIn) {
+      router.push("/place-order");
+    } else {
+      setCookies("pending-url", "/place-order");
+      router.push("auth/login");
+    }
+  };
+
   return (
     <div className="static w-full md:fixed md:top-28 md:right-6 md:w-4/12">
       <Card heading="Product Details">
@@ -28,7 +42,7 @@ export default function OrderSummary({
       <div className="fixed bottom-4 left-0 mt-3 grid w-full grid-cols-3 justify-between rounded bg-white px-5 py-2 md:static md:p-2">
         <div className="col-span-2 flex items-center">Rs. {totalPrice}</div>
         <button className="btn-primary btn rounded-none" onClick={onPlaceOrder}>
-          <span>Place Order</span>
+          <span>{isLoggedIn ? "Place Order" : "Login to place Order"}</span>
         </button>
       </div>
     </div>

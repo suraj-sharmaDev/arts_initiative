@@ -5,10 +5,14 @@ export const createAddress = async (key: { userId: ObjectId }, params: any) => {
   const db = await getMongoDb();
   const insertedAddresses = await db
     .collection("address")
-    .findOne({ isDefault: true });
+    .findOne({ isDefault: true, userId: key.userId });
+
   if (insertedAddresses == null) {
     params.isDefault = true;
+  } else {
+    params.isDefault = false;
   }
+
   return await db.collection("address").insertOne({
     userId: key.userId,
     ...params,

@@ -1,14 +1,20 @@
 import { Button } from "react-daisyui";
 import { signIn } from "next-auth/react";
 import env from "@/lib/env";
+import { getCookie } from "cookies-next";
 
 const GoogleButton = () => {
+  // if client has pending process such as
+  // place order in process
+  const returnUrl = getCookie("pending-url");
   return (
     <Button
       className="btn-outline w-full"
       onClick={() => {
         signIn("google", {
-          callbackUrl: env.redirectAfterSignIn,
+          callbackUrl: returnUrl
+            ? (returnUrl as string)
+            : env.redirectAfterSignIn,
         });
       }}
     >

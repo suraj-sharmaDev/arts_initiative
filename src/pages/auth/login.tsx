@@ -27,18 +27,16 @@ const Login: NextPageWithLayout<
   const router = useRouter();
   const { t } = useTranslation("common");
 
-  useEffect(() => {
-    if (status == "authenticated") {
-      (async () => {
-        const { data } = await axios.get("/api/user");
-        if (data?.data?.role) {
-          router.push(availableRoles?.[data.data.role].redirectAfterAuth);
-          return;
-        }
-        router.push(redirectAfterSignIn);
-      })();
-    }
-  }, [status]);
+  if (status == "authenticated") {
+    (async () => {
+      const { data } = await axios.get("/api/user");
+      if (data?.data?.role) {
+        router.push(availableRoles?.[data.data.role].redirectAfterAuth);
+        return;
+      }
+      router.push(redirectAfterSignIn);
+    })();
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -135,13 +133,13 @@ export const getServerSideProps = async (
 ) => {
   const { req, res, locale }: GetServerSidePropsContext = context;
   const session = await getSession(req, res);
-  // if (session) {
-  //   return {
-  //     redirect: {
-  //       destination: env.redirectAfterSignIn,
-  //     },
-  //   };
-  // }
+  if (session) {
+    return {
+      redirect: {
+        destination: env.redirectAfterSignIn,
+      },
+    };
+  }
   console.log("here in getsERVERPOPR");
   const cookieParsed = getInviteParsedCookie(req, res);
   console.log({ cookieParsed });

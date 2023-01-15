@@ -41,3 +41,12 @@ export const getGuestUserParsedCookie = (
         userId: null,
       };
 };
+
+export const getPendingUrlParsedCookie = (
+  req: GetServerSidePropsContext["req"],
+  res: GetServerSidePropsContext["res"]
+): string | null => {
+  const cookie = getCookie("pending-url", { req, res });
+
+  return cookie ? (cookie as string) : null;
+};

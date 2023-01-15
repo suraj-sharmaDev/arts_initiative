@@ -105,6 +105,7 @@ const getOptions = (
             }
           );
           deleteCookie("guest-user-id", { req, res });
+          deleteCookie("pending-url", { req, res });
         }
         return true;
       },
