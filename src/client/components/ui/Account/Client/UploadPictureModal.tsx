@@ -43,7 +43,7 @@ const UploadPictureModal: React.FC<Props> = ({
 }) => {
   const { mutate } = useSWRConfig();
   const { category } = useArtCategory();
-  let categoryValues: any = [];
+  const categoryValues: any = [];
 
   if (category) {
     category.map((c: any) => categoryValues.push(c.categoryName));
