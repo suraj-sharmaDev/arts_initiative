@@ -1,3 +1,4 @@
+import useArtCategory from "@/hooks/useArtCategory";
 import jsonToFormData from "@/lib/jsonToFormData";
 import { ApiResponse } from "@/types/base";
 import { XCircleIcon } from "@heroicons/react/24/solid";
@@ -41,6 +42,13 @@ const UploadPictureModal: React.FC<Props> = ({
   existingArtData,
 }) => {
   const { mutate } = useSWRConfig();
+  const { category } = useArtCategory();
+  let categoryValues: any = [];
+
+  if (category) {
+    category.map((c: any) => categoryValues.push(c.categoryName));
+  }
+
   const formik = useFormik({
     initialValues: {
       artworkName: existingArtData?.artworkName || "",
@@ -149,7 +157,7 @@ const UploadPictureModal: React.FC<Props> = ({
               onChange={(value) =>
                 formik.setFieldValue("artworkCategory", value)
               }
-              selectableList={["a", "b", "c", "d"]}
+              selectableList={categoryValues}
               placeholder="Select Category for your artwork"
             />
             <InputFileWithPreview
