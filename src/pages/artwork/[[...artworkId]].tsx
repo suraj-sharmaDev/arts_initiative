@@ -48,7 +48,7 @@ const Artwork: NextPageWithLayout<inferSSRProps<typeof getServerSideProps>> = ({
     <div className="relative w-full space-y-6 py-3">
       <div className="static w-full md:fixed md:top-28 md:left-6 md:w-5/12">
         <Image
-          src={"/api/getfile/" + artwork?.artworkImage}
+          src={artwork?.artworkImage}
           width="1024"
           height="1024"
           className="h-[20rem] w-full rounded md:h-[32rem]"

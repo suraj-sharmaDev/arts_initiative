@@ -41,7 +41,7 @@ export default function Features({ onClickCartBtn }: Props) {
               <UserCircleIcon className="h-12 w-12" />
             </div>
             <img
-              src={"/api/getfile/" + artwork.artworkImage}
+              src={artwork.artworkImage}
               className="h-[12rem] w-full rounded lg:h-60"
             />
             <div className="flex items-center justify-between">

@@ -30,6 +30,14 @@ const env = {
     clientId: `${process.env.GOOGLE_CLIENT_ID}`,
     clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
   },
+
+  // cloudinary configuration
+  cloudinary: {
+    apiKey: `${process.env.CLOUDINARY_API_KEY}`,
+    apiSecret: `${process.env.CLOUDINARY_API_SECRET}`,
+    cloudName: `${process.env.CLOUDINARY_NAME}`,
+    uploadPreset: `${process.env.CLOUDINARY_UPLOAD_PRESET}`,
+  },
 };
 
 export default env;

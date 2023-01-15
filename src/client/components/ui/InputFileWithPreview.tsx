@@ -32,7 +32,7 @@ const InputFileWithPreview = ({
               src={
                 uploadedFile instanceof File
                   ? URL.createObjectURL(uploadedFile)
-                  : (("/api/getfile/" + uploadedFile) as string)
+                  : (uploadedFile as string)
               }
               className="h-24 w-24"
             />

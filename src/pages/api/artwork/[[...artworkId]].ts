@@ -87,7 +87,7 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
   for (const untypedKey in files) {
     const key = untypedKey as string;
     const file = files[key] as formidable.File;
-    const filePath = await upload(file, userId ? userId : "temp");
+    const filePath = await upload(file);
     if (fields) fields[key] = filePath as string;
   }
   const artwork = await createArtwork(fields as any);
@@ -124,7 +124,7 @@ const handlePUT = async (req: NextApiRequest, res: NextApiResponse) => {
   for (const untypedKey in files) {
     const key = untypedKey as string;
     const file = files[key] as formidable.File;
-    const filePath = await upload(file, userId ? userId : "temp");
+    const filePath = await upload(file);
     if (fields) fields[key] = filePath as string;
   }
 

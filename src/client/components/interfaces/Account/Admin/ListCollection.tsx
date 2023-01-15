@@ -69,7 +69,7 @@ export default function ListArtist() {
                       <Image
                         width={300}
                         height={300}
-                        src={"/api/getfile/" + art.artworkImage}
+                        src={art.artworkImage}
                         key={art._id}
                         className={`h-[10rem] w-full rounded`}
                         alt={art.artworkImage}

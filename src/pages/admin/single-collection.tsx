@@ -104,7 +104,7 @@ const SingleCollection: NextPageWithLayout = () => {
                   <p>{a.artworkDescription}</p>
                   <div className="p-4">
                     <img
-                      src={"/api/getfile/" + a.artworkImage}
+                      src={a.artworkImage}
                       className={`h-[13rem] w-full rounded`}
                     />
                   </div>

@@ -60,7 +60,7 @@ const ScrollableGallery = ({ galleryItems, heading, userId }: Props) => {
                       <Stack>
                         {gD.artworks.map((iD: any, jdx: number) => (
                           <img
-                            src={"/api/getfile/" + iD.artworkImage}
+                            src={iD.artworkImage}
                             key={gD.title + jdx}
                             className={`h-full w-full`}
                           />

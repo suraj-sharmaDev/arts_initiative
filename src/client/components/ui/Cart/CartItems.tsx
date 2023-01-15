@@ -14,7 +14,7 @@ export default function CartItems({
         return (
           <div key={cart._id} className="flex items-center gap-5 bg-white p-4">
             <Image
-              src={"/api/getfile/" + cart.artwork.artworkImage}
+              src={cart.artwork.artworkImage}
               width={100}
               height={100}
               alt={cart.artwork.artworkName}

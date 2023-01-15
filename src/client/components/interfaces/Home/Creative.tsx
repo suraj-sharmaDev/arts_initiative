@@ -33,7 +33,7 @@ export default function Creative({ onClickCartBtn }: Props) {
             href={"/artwork/" + artwork._id}
           >
             <Image
-              src={"/api/getfile/" + artwork.artworkImage}
+              src={artwork.artworkImage}
               width={300}
               height={300}
               className="h-[12rem] w-full rounded md:h-48 lg:h-60"
