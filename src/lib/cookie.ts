@@ -50,3 +50,11 @@ export const getPendingUrlParsedCookie = (
 
   return cookie ? (cookie as string) : null;
 };
+
+export const getIsPlaceOrderParsedCookies = (
+  req: GetServerSidePropsContext["req"],
+  res: GetServerSidePropsContext["res"]
+): boolean => {
+  const cookie = getCookie("is-place-order", { req, res });
+  return cookie ? true : false;
+};

@@ -16,9 +16,10 @@ export default function OrderSummary({
 
   const onPlaceOrder = () => {
     if (isLoggedIn) {
+      setCookies("is-place-order", true);
       router.push("/place-order");
     } else {
-      setCookies("pending-url", "/place-order");
+      setCookies("pending-url", "/cart");
       router.push("auth/login");
     }
   };

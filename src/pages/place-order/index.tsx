@@ -1,4 +1,5 @@
 import { BaseLayout } from "@/components/layouts";
+import { getIsPlaceOrderParsedCookies } from "@/lib/cookie";
 import { inferSSRProps } from "@/lib/inferSSRProps";
 import { NextPageWithLayout } from "@/types/index";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -22,12 +23,26 @@ PlaceOrder.getLayout = function getLayout(page: ReactElement) {
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const { locale }: GetServerSidePropsContext = context;
-  return {
-    props: {
-      ...(locale ? await serverSideTranslations(locale, ["common"]) : {}),
-    },
-  };
+  // this page is viewable if user has already set
+  // cookie to place order
+  const isPlaceOrderActive = getIsPlaceOrderParsedCookies(
+    context.req,
+    context.res
+  );
+  if (isPlaceOrderActive) {
+    const { locale }: GetServerSidePropsContext = context;
+    return {
+      props: {
+        ...(locale ? await serverSideTranslations(locale, ["common"]) : {}),
+      },
+    };
+  } else {
+    return {
+      redirect: {
+        destination: "/cart",
+      },
+    };
+  }
 };
 
 export default PlaceOrder;
