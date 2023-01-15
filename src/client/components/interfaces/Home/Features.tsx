@@ -34,7 +34,7 @@ export default function Features({ onClickCartBtn }: Props) {
       <MultiCarousel>
         {artworks.map((artwork: any, idx) => (
           <div
-            className="w-full place-content-center space-y-2 rounded rounded border-[0.1rem] border-white p-3 text-right md:w-5/6"
+            className="w-full place-content-center space-y-2 rounded border-[0.1rem] border-white p-3 text-right md:w-5/6"
             key={idx}
           >
             <div className="flex w-full place-content-center rounded-full">

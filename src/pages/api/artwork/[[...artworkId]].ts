@@ -87,8 +87,11 @@ const handlePOST = async (req: NextApiRequest, res: NextApiResponse) => {
   for (const untypedKey in files) {
     const key = untypedKey as string;
     const file = files[key] as formidable.File;
-    const filePath = await upload(file);
-    if (fields) fields[key] = filePath as string;
+    const { url, public_id } = await upload(file);
+    if (fields) {
+      fields[key] = url as string;
+      fields["artworkImagePublicId"] = public_id as string;
+    }
   }
   const artwork = await createArtwork(fields as any);
   return res.status(200).json({ data: artwork, error: null });
@@ -124,8 +127,11 @@ const handlePUT = async (req: NextApiRequest, res: NextApiResponse) => {
   for (const untypedKey in files) {
     const key = untypedKey as string;
     const file = files[key] as formidable.File;
-    const filePath = await upload(file);
-    if (fields) fields[key] = filePath as string;
+    const { url, public_id } = await upload(file);
+    if (fields) {
+      fields[key] = url as string;
+      fields["artworkImagePublicId"] = public_id as string;
+    }
   }
 
   const artwork = await updateArtwork({ _id: artworkId }, fields as any);

@@ -113,7 +113,7 @@ export const updateArtwork = async (
 
   if (param.artworkImage) {
     // new image uploaded so delete previous file
-    await unlink(artwork?.artworkImage);
+    await unlink(artwork?.artworkImagePublicId, true);
   }
   return await db.collection("artwork").updateOne(
     {
@@ -144,7 +144,7 @@ export const deleteArtwork = async (param: {
     ...(param.artworkId && { _id: new ObjectId(param.artworkId) }),
   });
 
-  const imageDir = artwork?.artworkImage;
-  await unlink(imageDir);
+  const public_id = artwork?.artworkImagePublicId;
+  await unlink(public_id, true);
   return await db.collection("artwork").deleteOne({ _id: artwork?._id });
 };

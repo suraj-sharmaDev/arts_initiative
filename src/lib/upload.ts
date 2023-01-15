@@ -14,7 +14,10 @@ const upload = async (file: formidable.File) => {
   // delete temp upload file
   await fs.unlink(tempPath).catch((err) => console.log(err));
 
-  return result.secure_url;
+  return {
+    url: result.secure_url,
+    public_id: result.public_id,
+  };
 };
 
 export default upload;
