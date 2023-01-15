@@ -2,10 +2,11 @@ import { ReactElement } from "react";
 import axios from "axios";
 import { GetServerSidePropsContext } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
 import type { NextPageWithLayout } from "@/types/index";
 import { BaseLayout } from "@/components/layouts";
 import useUserCart from "@/hooks/useUserCart";
-import { Card, Error, Loading } from "@/components/ui";
+import { Error, Loading } from "@/components/ui";
 import { inferSSRProps } from "@/lib/inferSSRProps";
 import DeliveryAddress from "@/components/ui/Cart/DeliveryAddress";
 import CartItems from "@/components/ui/Cart/CartItems";
@@ -15,10 +16,15 @@ const Cart: NextPageWithLayout<
   inferSSRProps<typeof getServerSideProps>
 > = () => {
   const { isLoading, isError, userCart, mutate } = useUserCart();
+  const router = useRouter();
 
   const onClickRemoveCartItem = async (cartId: string) => {
     await axios.delete("/api/cart/" + cartId);
     mutate();
+  };
+
+  const onPlaceOrder = async () => {
+    router.push("place-order");
   };
 
   if (isLoading) return <Loading />;
@@ -47,7 +53,11 @@ const Cart: NextPageWithLayout<
         />
       </div>
       {/* Order Summary */}
-      <OrderSummary totalItems={totalItems} totalPrice={totalPrice} />
+      <OrderSummary
+        totalItems={totalItems}
+        totalPrice={totalPrice}
+        onPlaceOrder={onPlaceOrder}
+      />
     </div>
   );
 };

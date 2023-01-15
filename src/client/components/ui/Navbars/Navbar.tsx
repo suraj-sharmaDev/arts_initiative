@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -8,7 +8,6 @@ interface Props {
 
 export default function Navbar({ pageProps }: Props) {
   const session = useSession();
-  console.log(pageProps);
   return (
     <nav className="fixed z-30 w-full border-b border-gray-200 bg-white">
       <div className="px-3 py-3 lg:px-5 lg:py-5 lg:pl-3">

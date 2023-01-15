@@ -1,4 +1,5 @@
 import { XCircleIcon } from "@heroicons/react/24/solid";
+import classNames from "classnames";
 import { Modal } from "react-daisyui";
 
 interface Props {
@@ -55,7 +56,9 @@ const Body = ({
   children: React.ReactNode;
 }) => {
   return (
-    <Modal.Body className={`${className} pb-20 lg:pb-0`}>{children}</Modal.Body>
+    <Modal.Body className={`${classNames("pb-20 lg:pb-0", className)}`}>
+      {children}
+    </Modal.Body>
   );
 };
 

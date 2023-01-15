@@ -3,6 +3,12 @@ import { ObjectId } from "mongodb";
 
 export const createAddress = async (key: { userId: ObjectId }, params: any) => {
   const db = await getMongoDb();
+  const insertedAddresses = await db
+    .collection("address")
+    .findOne({ isDefault: true });
+  if (insertedAddresses == null) {
+    params.isDefault = true;
+  }
   return await db.collection("address").insertOne({
     userId: key.userId,
     ...params,
@@ -41,6 +47,20 @@ export const updateAddress = async (
   params: any
 ) => {
   const db = await getMongoDb();
+  // if it were to update default address then we have to set
+  // all other addresses default property to false for the user
+  if (params?.isDefault && key.userId) {
+    await db.collection("address").updateMany(
+      {
+        userId: key.userId,
+      },
+      {
+        $set: {
+          isDefault: false,
+        },
+      }
+    );
+  }
   return await db.collection("address").updateOne(
     {
       ...(key._id && { _id: key._id }),

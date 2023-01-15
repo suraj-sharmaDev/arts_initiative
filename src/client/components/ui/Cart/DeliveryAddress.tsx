@@ -14,11 +14,14 @@ import { ApiResponse } from "@/types/index";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { BuildingOffice2Icon, HomeIcon } from "@heroicons/react/24/solid";
+import AddAddressModal from "./AddAddressModal";
 
 export default function DeliveryAddress() {
   const session = useSession();
   const { isError, isLoading, userAddress, mutate } = useUserAddress();
-  const [isVisible, setVisible] = useState(false);
+  const [isAddaddressVisible, setAddadressVisible] = useState(false);
+  const [isChangeaddressVisible, setChangeaddressVisible] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -51,7 +54,7 @@ export default function DeliveryAddress() {
       mutate();
       formik.resetForm();
       toast.success("Successfully added gallery");
-      toggleModal();
+      toggleAddadressModal();
     },
   });
 
@@ -76,161 +79,117 @@ export default function DeliveryAddress() {
     );
   }
 
-  const toggleModal = () => setVisible(!isVisible);
+  const toggleAddadressModal = () => setAddadressVisible(!isAddaddressVisible);
+
+  const toggleChangeaddressModal = () =>
+    setChangeaddressVisible(!isChangeaddressVisible);
+
+  const changeDefaultAddress = async (address: any) => {
+    const response = await axios.put("/api/address/" + address._id, {
+      isDefault: true,
+    });
+    const { error }: ApiResponse<any> = response.data;
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    mutate();
+    toggleChangeaddressModal();
+  };
 
   if (!userAddress || userAddress.length == 0) {
     return (
       <>
         <div className="grid w-full grid-cols-1 bg-white p-3 text-sm">
-          <button className="btn-primary btn" onClick={toggleModal}>
+          <button className="btn-primary btn" onClick={toggleAddadressModal}>
             Add Delivery Address
           </button>
         </div>
-        <CustomModal isVisible={isVisible} responsive={true}>
-          <CustomModal.Header hasCloseBtn={true} closeBtnAction={toggleModal}>
-            <h1>Add delivery Address</h1>
-          </CustomModal.Header>
-          <CustomModal.Body>
-            <form onSubmit={formik.handleSubmit}>
-              <div className="space-y-1 text-sm">
-                <InputWithLabel
-                  label="Full Name (Required)*"
-                  type="string"
-                  value={formik.values.fullName}
-                  placeholder="e.g) Sagar Acharya"
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.fullName ? formik.errors.fullName : undefined
-                  }
-                  name="fullName"
-                />
-                <InputWithLabel
-                  label="Phone Number (Required)*"
-                  type="number"
-                  value={formik.values.phoneNumber}
-                  placeholder="e.g) 9710000000"
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.phoneNumber
-                      ? formik.errors.phoneNumber
-                      : undefined
-                  }
-                  name="phoneNumber"
-                />
-                <div className="grid grid-cols-2 gap-2">
-                  <InputWithLabel
-                    label="Pincode (Required)*"
-                    type="number"
-                    value={formik.values.pincode}
-                    placeholder="e.g) 22412"
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.pincode ? formik.errors.pincode : undefined
-                    }
-                    name="pincode"
-                  />
-                  <InputWithLabel
-                    label="Landmark"
-                    type="text"
-                    value={formik.values.landmark}
-                    placeholder="e.g) Near city mall"
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.landmark
-                        ? formik.errors.landmark
-                        : undefined
-                    }
-                    name="landmark"
-                  />
-                </div>
-                <InputWithLabel
-                  label="Full Address (Required)*"
-                  type="text"
-                  value={formik.values.fullAddress}
-                  placeholder="e.g) Tulsipur dang, Ghorahi Road"
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.fullAddress
-                      ? formik.errors.fullAddress
-                      : undefined
-                  }
-                  name="fullAddress"
-                />
-                <div className="space-y-2">
-                  <h1 className="label-text">Type of address</h1>
-                  <div className="flex gap-6">
-                    <button
-                      className={`flex rounded-full border border-gray-300 px-3 py-1 bg-${
-                        formik.values.addressType == "home" ? "primary" : "none"
-                      } text-${
-                        formik.values.addressType == "home"
-                          ? "white"
-                          : "gray-500"
-                      }`}
-                      onClick={() =>
-                        formik.setFieldValue("addressType", "home")
-                      }
-                      type="button"
-                    >
-                      <HomeIcon className="mr-1 h-5 w-5" />
-                      <span>Home</span>
-                    </button>
-                    <button
-                      className={`flex rounded-full border border-gray-300 px-3 py-1 bg-${
-                        formik.values.addressType == "office"
-                          ? "primary"
-                          : "none"
-                      } text-${
-                        formik.values.addressType == "office"
-                          ? "white"
-                          : "gray-500"
-                      }`}
-                      onClick={() =>
-                        formik.setFieldValue("addressType", "office")
-                      }
-                      type="button"
-                    >
-                      <BuildingOffice2Icon className="mr-1 h-5 w-5" />
-                      <span>Office</span>
-                    </button>
-                  </div>
-                </div>
-                <div className="pt-3">
-                  <Button
-                    type="submit"
-                    color="primary"
-                    loading={formik.isSubmitting}
-                    active={formik.dirty}
-                  >
-                    <span>Add Address</span>
-                  </Button>
-                </div>
-              </div>
-            </form>
-          </CustomModal.Body>
-        </CustomModal>
+        {/* Add delivery address modal */}
+        <AddAddressModal
+          isAddaddressVisible={isAddaddressVisible}
+          formik={formik}
+          toggleAddadressModal={toggleAddadressModal}
+        />
       </>
     );
   }
 
-  const localAddress = userAddress[0];
+  const defaultAddress = userAddress.find(
+    (address: any) => address?.isDefault == true
+  );
 
   return (
-    <div className="grid w-full grid-cols-4 bg-white p-3 text-sm">
-      <div className="col-span-3 space-y-1">
-        <p>
-          Deliver to: <b>{localAddress.fullName}</b>
-          <span className="ml-5 bg-gray-200 p-1 text-xs capitalize">
-            {localAddress.addressType}
-          </span>
-        </p>
-        <p>{localAddress.fullAddress}</p>
+    <>
+      <div className="grid w-full grid-cols-4 bg-white p-3 text-sm">
+        <div className="col-span-3 space-y-1">
+          <p>
+            Deliver to: <b>{defaultAddress.fullName}</b>
+            <span className="ml-5 bg-gray-200 p-1 text-xs capitalize">
+              {defaultAddress.addressType}
+            </span>
+          </p>
+          <p>{defaultAddress.fullAddress}</p>
+        </div>
+        <div className="flex justify-end">
+          <button
+            className="border border-gray-300 px-3 font-bold text-primary"
+            onClick={toggleChangeaddressModal}
+          >
+            <span>Change</span>
+          </button>
+        </div>
       </div>
-      <div className="flex justify-end">
-        <button className="border border-gray-300 px-3 font-bold text-primary">
-          <span>Change</span>
-        </button>
-      </div>
-    </div>
+      {/* Add delivery address modal */}
+      <AddAddressModal
+        isAddaddressVisible={isAddaddressVisible}
+        formik={formik}
+        toggleAddadressModal={toggleAddadressModal}
+      />
+      {/* Change Delivery Address */}
+      <CustomModal
+        isVisible={isChangeaddressVisible}
+        responsive={true}
+        toggleVisible={toggleChangeaddressModal}
+      >
+        <CustomModal.Header
+          hasCloseBtn={true}
+          closeBtnAction={toggleChangeaddressModal}
+        >
+          <h1>Your Addresses</h1>
+        </CustomModal.Header>
+        <CustomModal.Body>
+          <div className="space-y-3">
+            <ul className="space-y-3">
+              {userAddress.map((address: any) => (
+                <li
+                  key={address._id}
+                  className={`cursor-pointer ${
+                    address.isDefault
+                      ? "bg-green-200"
+                      : "border border-gray-400"
+                  } rounded px-2 py-3 text-sm`}
+                  onClick={() => changeDefaultAddress(address)}
+                >
+                  <p>{address.fullName}</p>
+                  <p>{address.phoneNumber}</p>
+                  <p>{address.fullAddress}</p>
+                  <p>{address.addressType}</p>
+                </li>
+              ))}
+            </ul>
+            <button
+              className="w-full rounded bg-primary p-3 text-white"
+              onClick={() => {
+                toggleChangeaddressModal();
+                toggleAddadressModal();
+              }}
+            >
+              Add New Address
+            </button>
+          </div>
+        </CustomModal.Body>
+      </CustomModal>
+    </>
   );
 }

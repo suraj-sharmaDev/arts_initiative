@@ -137,7 +137,7 @@ export default function BaseNavbar({ pageProps }: Props) {
           <li>
             <Link
               href="/auth/login"
-              className="rounded bg-white px-5 py-2 text-primary"
+              className="block rounded bg-white px-5 py-2 text-primary md:hidden"
             >
               Login
             </Link>
