@@ -7,9 +7,9 @@ import { BaseLayout } from "@/components/layouts";
 import useUserCart from "@/hooks/useUserCart";
 import { Error, Loading } from "@/components/ui";
 import { inferSSRProps } from "@/lib/inferSSRProps";
-import DeliveryAddress from "@/components/ui/Cart/DeliveryAddress";
-import CartItems from "@/components/ui/Cart/CartItems";
-import OrderSummary from "@/components/ui/Cart/OrderSummary";
+import DeliveryAddress from "@/components/interfaces/Cart/DeliveryAddress";
+import CartItems from "@/components/interfaces/Cart/CartItems";
+import OrderSummary from "@/components/interfaces/Cart/OrderSummary";
 
 const Cart: NextPageWithLayout<
   inferSSRProps<typeof getServerSideProps>

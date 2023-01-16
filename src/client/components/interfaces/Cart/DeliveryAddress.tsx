@@ -1,19 +1,16 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import CustomModal from "../CustomModal";
+import { CustomModal } from "@/components/ui";
 import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import useUserAddress from "@/hooks/useUserAddress";
-import Loading from "../Loading";
-import Error from "../Error";
-import InputWithLabel from "../InputWithLabel";
-import { Button } from "react-daisyui";
+import Loading from "../../ui/Loading";
+import Error from "../../ui/Error";
 import { ApiResponse } from "@/types/index";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { BuildingOffice2Icon, HomeIcon } from "@heroicons/react/24/solid";
 import AddAddressModal from "./AddAddressModal";
 
 export default function DeliveryAddress() {

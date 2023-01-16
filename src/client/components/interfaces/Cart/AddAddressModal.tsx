@@ -1,8 +1,7 @@
 import { BuildingOffice2Icon, HomeIcon } from "@heroicons/react/24/solid";
 import { FormikProps } from "formik";
 import { Button } from "react-daisyui";
-import CustomModal from "../CustomModal";
-import InputWithLabel from "../InputWithLabel";
+import { InputWithLabel, CustomModal } from "@/components/ui";
 
 interface formikValues {
   fullName: string;
