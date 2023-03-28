@@ -10,6 +10,7 @@ const defaultSettings: Settings = {
   slidesToShow: 4,
   slidesToScroll: 1,
   lazyLoad: "progressive",
+  autoplay: true,
   responsive: [
     {
       breakpoint: 1024,
@@ -40,11 +41,21 @@ const defaultSettings: Settings = {
 
 interface Props {
   children: React.ReactNode;
+  isSingleItemCarousel?: boolean;
 }
 
-const MultiCarousel = ({ children }: Props) => {
-  const slidesToShow = Math.min(Children.count(children), 4);
-  const settings = { ...defaultSettings, slidesToShow };
+const MultiCarousel = ({ children, isSingleItemCarousel = false }: Props) => {
+  const slidesToShow = isSingleItemCarousel
+    ? 1
+    : Math.min(Children.count(children), 4);
+
+  const settings = {
+    ...(isSingleItemCarousel
+      ? (({ responsive, ...rest }) => rest)(defaultSettings)
+      : defaultSettings),
+    slidesToShow,
+  };
+
   return (
     <Slider className="w-full" {...settings}>
       {children}

@@ -12,7 +12,7 @@ const Home: NextPageWithLayout = (props) => {
   const onClickCartBtn = () => router.push("/auth/login");
 
   return (
-    <div className="w-full space-y-6">
+    <div className="flex w-full flex-col space-y-6">
       <HeroSection />
       <Features onClickCartBtn={onClickCartBtn} />
       <Creative onClickCartBtn={onClickCartBtn} />

@@ -63,13 +63,13 @@ export default function BaseNavbar({ pageProps }: Props) {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 left-0 z-[120] w-full items-center bg-primary py-4 px-8 text-white shadow-md md:flex md:justify-between lg:px-10 lg:py-4"
+      className="fixed top-0 left-0 z-[120] w-full items-center bg-primary py-3 px-8 text-white shadow-md md:flex md:justify-between lg:px-10 lg:py-3"
     >
       {/* Brand and Searchbar */}
       <div className="flex w-full items-center justify-around md:w-4/6">
         <Link href={"/"}>
           <Image
-            src="/images/logo-680x561.png"
+            src="/images/logo.png"
             width={60}
             height={60}
             alt="Logo of website"
@@ -80,7 +80,7 @@ export default function BaseNavbar({ pageProps }: Props) {
 
       {/* Hamburger Menu */}
       <button
-        className="absolute top-5 left-2 h-8 w-8 cursor-pointer md:hidden"
+        className="absolute top-7 left-2 h-8 w-8 cursor-pointer md:hidden"
         onClick={toggleCollapsed}
       >
         {isCollapsed ? <Bars3Icon /> : <XMarkIcon />}
