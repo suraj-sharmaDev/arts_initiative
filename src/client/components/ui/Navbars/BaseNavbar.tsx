@@ -15,6 +15,7 @@ import useOnClickOutside from "@/hooks/useOnClickOutside";
 import Dropdown from "../Dropdown";
 import Searchbar from "./Searchbar";
 import CartButton from "./CartButton";
+import Image from "next/image";
 
 interface Props {
   pageProps?: any;
@@ -62,12 +63,17 @@ export default function BaseNavbar({ pageProps }: Props) {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 left-0 z-[120] w-full items-center bg-primary py-4 px-8 text-white shadow-md md:flex md:justify-between lg:px-10 lg:py-5"
+      className="fixed top-0 left-0 z-[120] w-full items-center bg-primary py-4 px-8 text-white shadow-md md:flex md:justify-between lg:px-10 lg:py-4"
     >
       {/* Brand and Searchbar */}
       <div className="flex w-full items-center justify-around md:w-4/6">
         <Link href={"/"}>
-          <span className="text-xl lg:text-2xl">Arted</span>
+          <Image
+            src="/images/logo-680x561.png"
+            width={60}
+            height={60}
+            alt="Logo of website"
+          />
         </Link>
         <Searchbar />
       </div>
@@ -108,7 +114,7 @@ export default function BaseNavbar({ pageProps }: Props) {
           )}
         </li>
         <li>
-          <button className="text-white md:px-5 md:py-1">
+          <button className="text-white md:px-5 md:py-1 md:text-sm">
             Become a seller
           </button>
         </li>

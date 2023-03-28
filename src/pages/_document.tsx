@@ -7,7 +7,9 @@ export default function Document() {
       className="h-full bg-gray-200 text-gray-500"
       data-theme="corporate"
     >
-      <Head />
+      <Head>
+        <link rel="shortcut icon" href="/favicon-32x32.png" />
+      </Head>
       <body className="h-full">
         <Main />
         <NextScript />

@@ -30,10 +30,6 @@ const Cart: NextPageWithLayout<
       </div>
     );
   }
-  const totalItems = userCart.length;
-  const totalPrice = userCart.reduce((prevValue: number, cartItem: any) => {
-    return (prevValue += Number(cartItem.price) as number);
-  }, 0);
 
   return (
     <div className="relative w-full py-3">
@@ -47,7 +43,7 @@ const Cart: NextPageWithLayout<
         />
       </div>
       {/* Order Summary */}
-      <OrderSummary totalItems={totalItems} totalPrice={totalPrice} />
+      <OrderSummary />
     </div>
   );
 };
