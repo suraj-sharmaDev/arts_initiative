@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html
       lang="en"
-      className="h-full bg-gray-200 text-gray-500"
+      className="h-full bg-[#fcfaf7] text-gray-500"
       data-theme="corporate"
     >
       <Head>
